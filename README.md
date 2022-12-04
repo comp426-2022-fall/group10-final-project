@@ -14,11 +14,11 @@
     - Database of users, posts, etc.
 
 - Endpoints
-    [ ] Login
-    [ ] Logout
-    [ ] Main forum/home page
-    [ ] Make post
-    [ ] Make reply
+    - [ ] Login
+    - [ ] Logout
+    - [ ] Main forum/home page
+    - [ ] Make post
+    - [ ] Make reply
 
 ## Summary 
 
