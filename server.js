@@ -12,12 +12,6 @@ var port = args.port || 5000; //either the port or 5000
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.listen(port);
 
-
-//need endpoint for login
-//need endpoint for logout
-//need endpoint for posting
-//need endpoint for getting a post
-
 expressApp.get("/app", (req, res) => { //get request
     res.status(200).send("200 OK"); //send 200 OK for the first thing
 });
@@ -49,8 +43,6 @@ expressApp.get("*", (req, res) => { //handle 404
 const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
-
-
 
 
 /*
