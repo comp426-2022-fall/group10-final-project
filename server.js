@@ -16,8 +16,9 @@ expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
 }   );
 
+
 //Create accesslog file stream
-const accesslog = fs.createWriteStream(logdir = '',  {flags: 'a'});
+const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
 
