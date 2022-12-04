@@ -22,7 +22,22 @@ expressApp.get("/app", (req, res) => { //get request
     res.status(200).send("200 OK"); //send 200 OK for the first thing
 });
 
-
+expressApp.get("/app/roll", (req, res) => {  //for login
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.get("/app/roll", (req, res) => { //for logout
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.get("/app/roll", (req, res) => { //for posting
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.get("/app/roll", (req, res) => { //for getting a post
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
 
 
 expressApp.get("*", (req, res) => { //handle 404
@@ -39,10 +54,6 @@ expressApp.use(morgan('combined', { stream: accesslog }));
 
 
 /*
-expressApp.get("/app", (req, res) => { //get request
-  res.status(200).send("200 OK"); //send 200 OK for the first thing
-});
-
 expressApp.get("/app/roll", (req, res) => { //default section
     let result = roll(6, 2, 1); 
     res.status(200).send(JSON.stringify(result)); //send the result
