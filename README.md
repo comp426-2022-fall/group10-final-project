@@ -1,5 +1,25 @@
 # group10-final-project
 
+## Planning Documentation
+
+- Creating a forum
+    - Allows user to login to the forum
+        - Usernames, encrypted passwords
+    - Posts include information about who posted, time, etc.
+        - Allow users to rate posts, thumbs-up/thumbs-down
+    - Forum filtered by most recent posts
+        - Themes/Topics added later
+        - Replies can show up underneath posts
+- Backend Info
+    - Database of users, posts, etc.
+
+- Endpoints
+    [ ] Login
+    [ ] Logout
+    [ ] Main forum/home page
+    [ ] Make post
+    [ ] Make reply
+
 ## Summary 
 
 COMP426 final project template boilerplate.
