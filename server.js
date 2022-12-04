@@ -12,9 +12,31 @@ var port = args.port || 5000; //either the port or 5000
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.listen(port);
 
+expressApp.get("/app", (req, res) => { //get request
+    res.status(200).send("200 OK"); //send 200 OK for the first thing
+});
+//currently only setup some of the endpoints
+expressApp.post("/app/login", (req, res) => {  //for login
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.post("/app/logout", (req, res) => { //for logout
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.post("/app/post", (req, res) => { //for posting
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.get("/app/getpost", (req, res) => { //for getting a post
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+
+
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
-}   );
+});
 
 
 //Create accesslog file stream
@@ -23,13 +45,7 @@ const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 expressApp.use(morgan('combined', { stream: accesslog }));
 
 
-
-
 /*
-expressApp.get("/app", (req, res) => { //get request
-  res.status(200).send("200 OK"); //send 200 OK for the first thing
-});
-
 expressApp.get("/app/roll", (req, res) => { //default section
     let result = roll(6, 2, 1); 
     res.status(200).send(JSON.stringify(result)); //send the result
