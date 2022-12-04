@@ -2,7 +2,7 @@
 import minimist from "minimist";
 import express  from "express";
 import morgan from "morgan";
-import db from "better-splite3";
+import fs from "fs";
 
 let args = minimist(process.argv.slice(2));
 let expressApp = express();
