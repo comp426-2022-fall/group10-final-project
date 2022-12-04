@@ -14,7 +14,7 @@
 - Backend Info
     - Database of users, posts, etc.
 
-- Endpoints
+- Pages
     - [ ] Login
     - [ ] Logout
     - [ ] User Profile Page
