@@ -1,7 +1,5 @@
 # group10-final-project
 
-# a99 Final Project
-
 ## Summary 
 
 COMP426 final project template boilerplate.
