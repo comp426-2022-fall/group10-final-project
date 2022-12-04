@@ -12,6 +12,13 @@ var port = args.port || 5000; //either the port or 5000
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.listen(port);
 
+
+//need endpoint for login
+//need endpoint for logout
+//need endpoint for posting
+//need endpoint for getting a post
+
+
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
 }   );
