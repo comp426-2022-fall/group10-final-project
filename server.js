@@ -22,15 +22,15 @@ expressApp.get("/app", (req, res) => { //get request
     res.status(200).send("200 OK"); //send 200 OK for the first thing
 });
 
-expressApp.get("/app/roll", (req, res) => {  //for login
+expressApp.post("/app/login", (req, res) => {  //for login
     let result = roll(6, 2, 1); 
     res.status(200).send(JSON.stringify(result)); 
 });
-expressApp.get("/app/roll", (req, res) => { //for logout
+expressApp.post("/app/roll", (req, res) => { //for logout
     let result = roll(6, 2, 1); 
     res.status(200).send(JSON.stringify(result)); 
 });
-expressApp.get("/app/roll", (req, res) => { //for posting
+expressApp.post("/app/roll", (req, res) => { //for posting
     let result = roll(6, 2, 1); 
     res.status(200).send(JSON.stringify(result)); 
 });
