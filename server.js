@@ -33,6 +33,31 @@ expressApp.get("/app/getpost", (req, res) => { //for getting a post
     res.status(200).send(JSON.stringify(result)); 
 });
 
+// Create user endpoint
+expressApp.post('/app/user/new/', (req, res, next) => {
+    let userData = {
+        username: req.body.username, 
+        password: req.body.password,
+        mobile: req.body.mobile, 
+        email: req.body.email, 
+    }
+    console.log(userData);
+})
+// Read user info endpoint 
+expressApp.get('/app/user/info/:username', (req, res, next) => {
+    let userData = {
+        username:req.params.username
+    }
+})
+// Modify user info endpoint
+expressApp.patch('/app/user/info/update/:username/', (req, res, next) => {
+    let userData = {
+        username:req.params.username
+    }
+})
+// Delete user info endpoint
+expressApp.delete('app/user/delete')
+
 
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
