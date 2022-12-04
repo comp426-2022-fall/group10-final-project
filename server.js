@@ -18,10 +18,16 @@ expressApp.listen(port);
 //need endpoint for posting
 //need endpoint for getting a post
 
+expressApp.get("/app", (req, res) => { //get request
+    res.status(200).send("200 OK"); //send 200 OK for the first thing
+});
+
+
+
 
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
-}   );
+});
 
 
 //Create accesslog file stream
