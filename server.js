@@ -37,17 +37,22 @@ expressApp.get("/app/getpost", (req, res) => { //for getting a post
 expressApp.post('/app/user/new/', (req, res, next) => {
     let userData = {
         username: req.body.username, 
-        password: req.body.password,
         mobile: req.body.mobile, 
         email: req.body.email, 
+        password: req.body.password,
     }
+    const stmt = db.prepare('INSERT INTO userinfo (username, email, mobile) VALUES (?, ?, ?)');
+    const info = stmt.run(userData.username, userData.mobile, userData.email);
+    res.status(200).json({"message": "user " + userData.username + " created"})
     console.log(userData);
+    console.log(info);
 })
 // Read user info endpoint 
 expressApp.get('/app/user/info/:username', (req, res, next) => {
-    let userData = {
-        username:req.params.username
-    }
+    const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?')
+    const info = stmt.get(req.params.username);
+    res.status(200);
+    console.log(info);
 })
 // Modify user info endpoint
 expressApp.patch('/app/user/info/update/:username/', (req, res, next) => {
