@@ -1,6 +1,8 @@
 //import {roll} from "./lib/roll.js";
 import minimist from "minimist";
 import express  from "express";
+import morgan from "morgan";
+import db from "better-splite3";
 
 let args = minimist(process.argv.slice(2));
 let expressApp = express();
@@ -13,6 +15,13 @@ expressApp.listen(port);
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
 }   );
+
+
+//Create accesslog file stream
+const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
+//Use morgan to log every API call
+expressApp.use(morgan('combined', { stream: accesslog }));
+
 
 
 
