@@ -10,12 +10,14 @@
     - Forum filtered by most recent posts
         - Themes/Topics added later
         - Replies can show up underneath posts
+        - Filter by posts each user makes
 - Backend Info
     - Database of users, posts, etc.
 
-- Endpoints
+- Pages
     - [ ] Login
     - [ ] Logout
+    - [ ] User Profile Page
     - [ ] Main forum/home page
     - [ ] Make post
     - [ ] Make reply
