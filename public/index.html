@@ -13,7 +13,13 @@
 						fetch(apiUrl).then(response => {
 						  return response.json();;
 						}).then(data => {
-						  document.write(JSON.stringify(data));
+							data.forEach(element => {
+								var temp = JSON.stringify(element);
+								var text = document.createTextNode(temp);
+								var element = document.createElement('div');
+								element.appendChild(text);
+								document.body.appendChild(element);
+							});
 						}).catch(err => {
 						  document.write(err);
 						});
