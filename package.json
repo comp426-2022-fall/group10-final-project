@@ -4,7 +4,7 @@
   "description": "A web forum with attached login system",
   "main": "server.js",
   "scripts": {
-    "test": "blank"
+    "test": "nodemon server.js"
   },
   "repository": {
     "type": "git",
