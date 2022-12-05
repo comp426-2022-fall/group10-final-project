@@ -22,23 +22,15 @@ expressApp.get("/app", (req, res) => { //get request
 });
 //currently only setup some of the endpoints
 expressApp.post("/app/login", (req, res) => {  //for login
+    loggedIn = true;
     let userData = {
         username: req.body.username, 
         password: req.body.password,
     }
-    const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?')
-    const info = stmt.get(req.params.username);
-    if (info.username==req.params.username && info.password==req.params.password) {
-        loggedIn = true;
-        currentUser = userData;
-        res.status(200).send("Logging in as "+req.params.username);
-    } else if (info.username==req.params.username && info.password!=req.params.password) {
-        res.status(200).send("Incorrect password!");
-    } else {
-        loggedIn = true;
-        currentUser = userData;
-        res.status(200).json({"message": "user " + userData.username + " created"});
-    }
+    currentUser = userData;
+    const stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
+    const info = stmt.run(userData.username, userData.password);
+    res.status(200).json({"message": "user " + userData.username + " created"});
 });
 expressApp.post("/app/logout", (req, res) => { //for logout
     loggedIn = false;
@@ -56,16 +48,20 @@ expressApp.post("/app/post", (req, res) => { //for posting
         res.status(200).send("Please login to post.")
     }
 });
-expressApp.get("/app/getpost", (req, res) => { //for getting a post
-    let result = roll(6, 2, 1); 
-    res.status(200).send(JSON.stringify(result)); 
-});
+
+expressApp.get('/app/allposts', (req, res) => {
+    const stmt = db.prepare('SELECT * FROM posts');
+    const info = stmt.all();
+    console.log(info.post)
+    res.status(200).send(info)
+})
+
 expressApp.get("/app/getpost/:username/", (req, res) => {
     // get posts for specific user
     const stmt = db.prepare('SELECT * FROM posts WHERE username = ?');
-    const info = stmt.run(req.params.username);
+    const info = stmt.all(req.params.username);
     console.log(info.post)
-    res.status(200).json(info)
+    res.status(200).send(info)
 });
 // Read user info endpoint 
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
@@ -106,12 +102,6 @@ expressApp.get("*", (req, res) => { //handle 404
 const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
-
-expressApp.get('/app/allposts', (req, res) => {
-    const stmt = db.prepare('SELECT post from posts');
-    const info = stmt.get(stmt);
-    res.status(200).json(info);
-})
 
 fs.readFile(`./public/index.html`, 'utf8', (err, data) => {
     if (err) {
