@@ -17,7 +17,7 @@ expressApp.use(express.urlencoded({ extended: true })); //extending to url encod
 expressApp.listen(port);
 
 expressApp.get("/app", (req, res) => { //get request
-    res.status(200).send("200 OK"); //send 200 OK for the first thing
+    res.status(200).send("200 OK\nCurrently logged in as: "+currentUser.username); //send 200 OK for the first thing
 });
 //currently only setup some of the endpoints
 expressApp.post("/app/login", (req, res) => {  //for login
@@ -43,6 +43,8 @@ expressApp.post("/app/post", (req, res) => { //for posting
         const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
         const info = stmt.run(currentUser.username, req.body.post);
         res.status(200).json(info);
+    } else {
+        res.status(200).send("Please login to post.")
     }
 });
 expressApp.get("/app/getpost", (req, res) => { //for getting a post
@@ -50,11 +52,11 @@ expressApp.get("/app/getpost", (req, res) => { //for getting a post
     res.status(200).send(JSON.stringify(result)); 
 });
 expressApp.get("/app/getpost/:username/", (req, res) => {
-    if (loggedIn) {
-        // get posts for specific user
-        let result = roll(6, 2, 1); 
-        res.status(200).send(JSON.stringify(result)); 
-    }
+    // get posts for specific user
+    const stmt = db.prepare('SELECT * FROM posts WHERE username = ?');
+    const info = stmt.run(req.params.username);
+    console.log(info.post)
+    res.status(200).json(info)
 });
 // Read user info endpoint 
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
