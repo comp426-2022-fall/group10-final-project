@@ -63,7 +63,7 @@ expressApp.get('/app/user/info/:username/', (req, res, next) => {
         res.status(200).json(info);
     }
     catch{
-        console.error(e)
+        console.error(e);
     }
 })
 // Modify user info endpoint
