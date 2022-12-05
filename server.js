@@ -11,6 +11,10 @@ let args = minimist(process.argv.slice(2));
 let expressApp = express();
 
 var port = args.port || 5000; //either the port or 5000
+if(args.port == 4000){
+    console.log("4000 is used for webpage. Server redirected to port 5000.");
+    port = 5000;
+}
 
 var loggedIn = false;
 var currentUser;
@@ -104,6 +108,6 @@ fs.readFile(`./public/index.html`, 'utf8', (err, data) => {
       })
     
     server.listen(4000, () => {
-        console.log(`Server listening on port 4000`);
+        console.log(`Website Server listening on port 4000`);
       });
     });
