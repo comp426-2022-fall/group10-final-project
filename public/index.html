@@ -9,9 +9,9 @@
         	<div>
             		<h1>Posts</h1>
 					<script type="text/javascript">
-						var apiUrl = 'https://localhost:5000/app/allposts';
-						fetch(apiUrl).then(response => {
-						  return response.json();
+						var apiUrl = 'http://localhost:5000/app/allposts';
+						fetch(apiUrl, { mode: 'no-cors'}).then(response => {
+						  return response;
 						}).then(data => {
 						  document.write(data);
 						}).catch(err => {
