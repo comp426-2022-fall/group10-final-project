@@ -4,6 +4,7 @@ import express, { json }  from "express";
 import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
+import http from 'http';
 
 let args = minimist(process.argv.slice(2));
 let expressApp = express();
@@ -105,3 +106,26 @@ expressApp.get("*", (req, res) => { //handle 404
 const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
+
+expressApp.get('/app/allposts', (req, res) => {
+    const stmt = db.prepare('SELECT post from posts');
+    const info = stmt.get(stmt);
+    res.status(200).json(info);
+})
+
+fs.readFile(`./public/index.html`, 'utf8', (err, data) => {
+    if (err) {
+        console.error(err);
+        return;
+      }
+    
+    const server = http.createServer((req, res) => {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'text/html')
+        res.end(data)
+      })
+    
+    server.listen(4000, () => {
+        console.log(`Server listening on port 4000`)
+      })
+    });
