@@ -45,7 +45,7 @@ expressApp.post('/app/user/new/', (req, res, next) => {
     res.status(200).json({"message": "user " + userData.username + " created"});
 })
 // Read user info endpoint 
-expressApp.get('/app/user/info/:username', (req, res, next) => {
+expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
         const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?')
         const info = stmt.get(req.params.username);
@@ -56,17 +56,18 @@ expressApp.get('/app/user/info/:username', (req, res, next) => {
     }
 })
 // Modify user info endpoint
-expressApp.patch('/app/user/info/update/:username/', (req, res, next) => {
+expressApp.post('/app/user/info/update/:username/', (req, res, next) => {
     let userData = {
         username:req.params.username,
         password:req.params.password
     }
+    console.log(req.body)
     const stmt = db.prepare('UPDATE userinfo SET password = COALESCE(?, password) WHERE username = ?');
-    const info = stmt.run(userData.password, req.params.id);
+    const info = stmt.run(req.body.password, req.params.username);
     res.status(200).json(info);
 })
 // Delete user info endpoint
-expressApp.delete('app/user/delete/:username', (req, res) => {
+expressApp.delete('/app/user/delete/:username', (req, res) => {
     const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
     const info = stmt.run(req.params.username);
     res.status(200).json(info);
