@@ -33,9 +33,8 @@ expressApp.post("/app/login", (req, res) => {  //for login
     res.status(200).json({"message": "user " + userData.username + " created"});
 });
 
-expressApp.post("/app/post", (req, res) => { //for posting
+expressApp.post("/app/post", (req, res) => { 
     if (loggedIn) {
-        // post when logged
         const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
         const info = stmt.run(currentUser.username, req.body.post);
         res.status(200).json(info);
