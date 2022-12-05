@@ -103,6 +103,6 @@ fs.readFile(`./public/index.html`, 'utf8', (err, data) => {
       })
     
     server.listen(4000, () => {
-        console.log(`Server listening on port 4000`)
+        console.log(`Server listening on port 4000`);
       })
     });
