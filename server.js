@@ -40,7 +40,7 @@ expressApp.post("/app/post", (req, res) => { //for posting
         const info = stmt.run(currentUser.username, req.body.post);
         res.status(200).json(info);
     } else {
-        res.status(200).send("Please login to post.")
+        res.status(200).send("Please login to post.");
     }
 });
 
