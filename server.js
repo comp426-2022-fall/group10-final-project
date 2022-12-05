@@ -47,7 +47,7 @@ expressApp.post("/app/post", (req, res) => { //for posting
 expressApp.get('/app/allposts', (req, res) => {
     const stmt = db.prepare('SELECT * FROM posts');
     const info = stmt.all();
-    res.status(200).send(info)
+    res.status(200).send(info);
 })
 
 expressApp.get("/app/getpost/:username/", (req, res) => {
