@@ -44,5 +44,20 @@ if(userRow == undefined){
     console.log('User info table exists.')
 }
 
+const poststmt = db.prepare(`SELECT name FROM sqlite_master WHERE type='table' and name='posts';`);
+let postRow = poststmt.get();
+if(postRow == undefined){
+    console.log('Post database appears to be empty. Creating post database...')
+    const userinfoInit = `
+        CREATE TABLE posts (
+            username VARCHAR, 
+            post VARCHAR,
+        );
+        `
+        db.exec(userinfoInit);
+        }else{
+    console.log('Post info table exists.')
+    }
+
 //Export DB
 export default db;
