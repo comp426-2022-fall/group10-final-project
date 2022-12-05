@@ -47,13 +47,13 @@ const poststmt = db.prepare(`SELECT name FROM sqlite_master WHERE type='table' a
 let postRow = poststmt.get();
 if(postRow == undefined){
     console.log('Post database appears to be empty. Creating post database...')
-    const userinfoInit = `
+    const postinfoInit = `
         CREATE TABLE posts (
             username VARCHAR, 
-            post VARCHAR,
+            post VARCHAR
         );
         `
-        db.exec(userinfoInit);
+        db.exec(postinfoInit);
         }else{
     console.log('Post info table exists.')
     }

@@ -11,6 +11,7 @@ let expressApp = express();
 var port = args.port || 5000; //either the port or 5000
 
 var loggedIn = false;
+var currentUser;
 
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.listen(port);
@@ -25,20 +26,23 @@ expressApp.post("/app/login", (req, res) => {  //for login
         username: req.body.username, 
         password: req.body.password,
     }
+    currentUser = userData;
     const stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
     const info = stmt.run(userData.username, userData.password);
     res.status(200).json({"message": "user " + userData.username + " created"});
 });
 expressApp.post("/app/logout", (req, res) => { //for logout
     loggedIn = false;
+    currentUser = {};
     let result = roll(6, 2, 1); 
     res.status(200).send(JSON.stringify(result)); 
 });
 expressApp.post("/app/post", (req, res) => { //for posting
     if (loggedIn) {
         // post when logged
-        let result = roll(6, 2, 1); 
-        res.status(200).send(JSON.stringify(result)); 
+        const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
+        const info = stmt.run(currentUser.username, req.body.post);
+        res.status(200).json(info);
     }
 });
 expressApp.get("/app/getpost", (req, res) => { //for getting a post
