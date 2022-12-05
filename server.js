@@ -10,6 +10,8 @@ let expressApp = express();
 
 var port = args.port || 5000; //either the port or 5000
 
+var loggedIn = false;
+
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.listen(port);
 
@@ -18,24 +20,7 @@ expressApp.get("/app", (req, res) => { //get request
 });
 //currently only setup some of the endpoints
 expressApp.post("/app/login", (req, res) => {  //for login
-    let result = roll(6, 2, 1); 
-    res.status(200).send(JSON.stringify(result)); 
-});
-expressApp.post("/app/logout", (req, res) => { //for logout
-    let result = roll(6, 2, 1); 
-    res.status(200).send(JSON.stringify(result)); 
-});
-expressApp.post("/app/post", (req, res) => { //for posting
-    let result = roll(6, 2, 1); 
-    res.status(200).send(JSON.stringify(result)); 
-});
-expressApp.get("/app/getpost", (req, res) => { //for getting a post
-    let result = roll(6, 2, 1); 
-    res.status(200).send(JSON.stringify(result)); 
-});
-
-// Create user endpoint
-expressApp.post('/app/user/new/', (req, res, next) => {
+    loggedIn = true;
     let userData = {
         username: req.body.username, 
         password: req.body.password,
@@ -43,7 +28,30 @@ expressApp.post('/app/user/new/', (req, res, next) => {
     const stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
     const info = stmt.run(userData.username, userData.password);
     res.status(200).json({"message": "user " + userData.username + " created"});
-})
+});
+expressApp.post("/app/logout", (req, res) => { //for logout
+    loggedIn = false;
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.post("/app/post", (req, res) => { //for posting
+    if (loggedIn) {
+        // post when logged
+        let result = roll(6, 2, 1); 
+        res.status(200).send(JSON.stringify(result)); 
+    }
+});
+expressApp.get("/app/getpost", (req, res) => { //for getting a post
+    let result = roll(6, 2, 1); 
+    res.status(200).send(JSON.stringify(result)); 
+});
+expressApp.get("/app/getpost/:username/", (req, res) => {
+    if (loggedIn) {
+        // get posts for specific user
+        let result = roll(6, 2, 1); 
+        res.status(200).send(JSON.stringify(result)); 
+    }
+});
 // Read user info endpoint 
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
