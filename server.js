@@ -51,15 +51,14 @@ expressApp.get('/app/allposts', (req, res) => {
 })
 
 expressApp.get("/app/getpost/:username/", (req, res) => {
-    // get posts for specific user
     const stmt = db.prepare('SELECT * FROM posts WHERE username = ?');
     const info = stmt.all(req.params.username);
     res.status(200).send(info)
 });
-// Read user info endpoint 
+
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
-        const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?')
+        const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?');
         const info = stmt.get(req.params.username);
         res.status(200).json(info);
     }
