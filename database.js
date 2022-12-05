@@ -33,8 +33,7 @@ if(userRow == undefined){
     CREATE TABLE userinfo (
         id INTEGER PRIMARY KEY, 
         username VARCHAR,  
-        mobile VARCHAR, 
-        email VARCHAR, 
+        password VARCHAR,
     );
     `
     db.exec(userinfoInit);
