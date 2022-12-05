@@ -9,11 +9,11 @@
         	<div>
             		<h1>Posts</h1>
 					<script type="text/javascript">
-						var apiUrl = 'https://localhost:5000/app/allposts';
+						var apiUrl = 'http://localhost:5000/app/allposts';
 						fetch(apiUrl).then(response => {
-						  return response.json();
+						  return response.json();;
 						}).then(data => {
-						  document.write(data);
+						  document.write(JSON.stringify(data));
 						}).catch(err => {
 						  document.write(err);
 						});

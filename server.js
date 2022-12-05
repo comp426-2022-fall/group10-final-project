@@ -5,6 +5,7 @@ import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
 import http from 'http';
+import cors from 'cors';
 
 let args = minimist(process.argv.slice(2));
 let expressApp = express();
@@ -15,6 +16,7 @@ var loggedIn = false;
 var currentUser;
 
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
+expressApp.use(cors());
 expressApp.listen(port);
 
 expressApp.get("/app", (req, res) => { //get request
