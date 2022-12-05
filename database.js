@@ -29,7 +29,7 @@ const db = new database('data.db');
 const userstmt = db.prepare(`SELECT name FROM sqlite_master WHERE type='table' and name='userinfo';`);
 let userRow = userstmt.get();
 if(userRow == undefined){
-    console.log('Log database appears to be empty. Creating log database...')
+    console.log('User database appears to be empty. Creating user database...')
 
     const userinfoInit = `
     CREATE TABLE userinfo (
@@ -37,7 +37,6 @@ if(userRow == undefined){
         username VARCHAR,  
         password VARCHAR
     );
-    INSERT INTO userinfo (username, password) VALUES ('admin','password');
     `
     db.exec(userinfoInit);
 }else{
