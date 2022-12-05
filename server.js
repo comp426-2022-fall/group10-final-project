@@ -67,7 +67,7 @@ expressApp.post('/app/user/info/update/:username/', (req, res, next) => {
     res.status(200).json(info);
 })
 // Delete user info endpoint
-expressApp.delete('/app/user/delete/:username', (req, res) => {
+expressApp.get('/app/user/delete/:username', (req, res) => {
     const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
     const info = stmt.run(req.params.username);
     res.status(200).json(info);
