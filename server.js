@@ -21,15 +21,23 @@ expressApp.get("/app", (req, res) => { //get request
 });
 //currently only setup some of the endpoints
 expressApp.post("/app/login", (req, res) => {  //for login
-    loggedIn = true;
     let userData = {
         username: req.body.username, 
         password: req.body.password,
     }
-    currentUser = userData;
-    const stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
-    const info = stmt.run(userData.username, userData.password);
-    res.status(200).json({"message": "user " + userData.username + " created"});
+    const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?')
+    const info = stmt.get(req.params.username);
+    if (info.username==req.params.username && info.password==req.params.password) {
+        loggedIn = true;
+        currentUser = userData;
+        res.status(200).send("Logging in as "+req.params.username);
+    } else if (info.username==req.params.username && info.password!=req.params.password) {
+        res.status(200).send("Incorrect password!");
+    } else {
+        loggedIn = true;
+        currentUser = userData;
+        res.status(200).json({"message": "user " + userData.username + " created"});
+    }
 });
 expressApp.post("/app/logout", (req, res) => { //for logout
     loggedIn = false;
