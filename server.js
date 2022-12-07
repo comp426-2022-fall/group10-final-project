@@ -39,6 +39,12 @@ expressApp.post("/app/login", (req, res) => {  //for login
     res.status(200).json({"message": "user " + userData.username + " created"});
 });
 
+expressApp.get("/app/allusers", (req, res) => {
+    const stmt = db.prepare('SELECT username FROM userinfo');
+    const info = stmt.all();
+    res.status(200).send(info);
+})
+
 expressApp.post("/app/post", (req, res) => { 
     if (loggedIn) {
         const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
