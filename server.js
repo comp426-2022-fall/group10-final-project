@@ -30,7 +30,6 @@ expressApp.get("/app", (req, res) => { //get request
 });
 //currently only setup some of the endpoints
 expressApp.post("/app/login", (req, res) => {  //for login
-    // loggedIn = true;
     let newUserData = {
         username: req.body.username, 
         password: req.body.password,
@@ -78,9 +77,6 @@ expressApp.post("/app/createuser", (req, res) => {
 expressApp.get("/app/allusers", (req, res) => {
     const stmt = db.prepare('SELECT username FROM userinfo');
     const info = stmt.all();
-    // for(var key in info){
-    //     console.log(info[key].username)
-    // }
     res.status(200).send(info);
 })
 
