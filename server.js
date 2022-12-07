@@ -23,6 +23,8 @@ expressApp.use(express.urlencoded({ extended: true })); //extending to url encod
 expressApp.use(cors());
 expressApp.listen(port);
 
+expressApp.use(express.static('./public'))
+
 expressApp.get("/app", (req, res) => { //get request
     res.status(200).send("200 OK\nCurrently logged in as: "+currentUser.username); //send 200 OK for the first thing
 });
@@ -101,19 +103,20 @@ const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
 
-fs.readFile(`./public/index.html`, 'utf8', (err, data) => {
-    if (err) {
-        console.error(err);
-        return;
-      }
+
+// fs.readFile(`./public`, 'utf8', (err, data) => {
+//     if (err) {
+//         console.error(err);
+//         return;
+//       }
     
-    const server = http.createServer((req, res) => {
-        res.statusCode = 200
-        res.setHeader('Content-Type', 'text/html');
-        res.end(data);
-      })
+//     const server = http.createServer((req, res) => {
+//         res.statusCode = 200
+//         res.setHeader('Content-Type', 'text/html');
+//         res.end(data);
+//       })
     
-    server.listen(4000, () => {
-        console.log(`Website Server listening on port 4000`);
-      });
-    });
+//     server.listen(4000, () => {
+//         console.log(`Website Server listening on port 4000`);
+//       });
+//     });

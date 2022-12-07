@@ -3,35 +3,16 @@
 	<head>  
         	<meta charset="UTF-8">
         	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="stylesheet" href="styles.css">
         	<title>Posts</title>
     	</head>
     	<body>
         	<div>
             		<h1>Posts</h1>
-					<script type="text/javascript">
-						var apiUrl = 'http://localhost:5000/app/allposts';
-						fetch(apiUrl).then(response => {
-						  return response.json();;
-						}).then(data => {
-							data.forEach(element => {
-								var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
-								var text = document.createTextNode(temp);
-								var element = document.createElement('div');
-								element.style.fontSize = '20px'
-								element.style.margins = '14px 20px'
-								element.style.border = '1px solid black'
- 							 	element.style.margin = '8px 0'
-								element.style.padding = '5px'
-								element.appendChild(text);
-								document.body.appendChild(element);
-							});
-						}).catch(err => {
-						  document.write(err);
-						});
-					</script>
 					<body>
 						Posts will display here.
 					</body>
         	</div>
+			<script src="main.js"></script>
     	</body>
 </html>
