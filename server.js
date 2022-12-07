@@ -30,20 +30,57 @@ expressApp.get("/app", (req, res) => { //get request
 });
 //currently only setup some of the endpoints
 expressApp.post("/app/login", (req, res) => {  //for login
-    loggedIn = true;
-    let userData = {
+    // loggedIn = true;
+    let newUserData = {
         username: req.body.username, 
         password: req.body.password,
     }
-    currentUser = userData;
-    const stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
-    const info = stmt.run(userData.username, userData.password);
-    res.status(200).json({"message": "user " + userData.username + " created"});
+    if (loggedIn) {
+        return res.status(200).send("You are already logged in as " + currentUser.username + ".")
+    }
+    else {
+        var stmt = db.prepare('SELECT * FROM userinfo');
+        const currentUsers = stmt.all();
+        for(var i in currentUsers){
+            if (newUserData.username == currentUsers[i].username) {
+                if (newUserData.password == currentUsers[i].password) {
+                    loggedIn = true;
+                    currentUser = newUserData;
+                    var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
+                    const info = stmt.run(newUserData.username, newUserData.password);
+                    return res.status(200).send("Logged in as " + newUserData.username)
+                }   
+            }
+        }
+        return res.status(200).send("This user does not exist.")
+    }
 });
+
+expressApp.post("/app/createuser", (req, res) => {
+    let newUserData = {
+        username: req.body.username, 
+        password: req.body.password,
+    }
+    var stmt = db.prepare('SELECT username FROM userinfo');
+    const currentUsers = stmt.all();
+    for(var i in currentUsers){
+        if (newUserData.username == currentUsers[i].username) {
+            return res.status(200).send("This username is already taken.")
+        }
+    }
+    loggedIn = true;
+    currentUser = newUserData;
+    var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
+    const info = stmt.run(newUserData.username, newUserData.password);
+    res.status(200).json("New user " + newUserData.username + " has been created.");
+})
 
 expressApp.get("/app/allusers", (req, res) => {
     const stmt = db.prepare('SELECT username FROM userinfo');
     const info = stmt.all();
+    // for(var key in info){
+    //     console.log(info[key].username)
+    // }
     res.status(200).send(info);
 })
 
