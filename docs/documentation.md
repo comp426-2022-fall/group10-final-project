@@ -149,7 +149,8 @@ Password for username updated successfully.
 Password did not match for user.
 ```
 ### /app/user/delete/:username/
-
+Responds with "Successfully deleted user username" if the user is deleted.
+Responds with "Incorrect passowrd" if the inputted password is wrong.
 #### Request body
 ```
 "password=(user password)"
@@ -159,5 +160,8 @@ Password did not match for user.
 curl http://localhost:5000/app/user/info/delete/username -d "password=password"
 ```
 ```
-
+Successfully deleted user username.
+```
+```
+Incorrect password.
 ```

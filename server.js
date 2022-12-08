@@ -170,7 +170,7 @@ expressApp.post('/app/user/delete/:username', (req, res) => {
             if (password == currentUsers[i].password) {
                 const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
                 const info = stmt.run(req.params.username);
-                return res.status(200).send("Successfully deleted user "+req.params.username);
+                return res.status(200).send("Successfully deleted user "+req.params.username+".");
             } else {
                 return res.status(200).send("Incorrect password.")
             }
