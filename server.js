@@ -68,6 +68,8 @@ expressApp.post("/app/login", (req, res) => {
     }
 });
 
+// See /app/logout/ documentation
+// Logs the user out of their account
 expressApp.get("/app/logout", (req, res) => { 
     if (loggedIn) {
         currentUser = null;
