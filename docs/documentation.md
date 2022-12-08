@@ -62,7 +62,7 @@ Responds "New user has been created." otherwise.
 #### Response body
 
 ```
-curl http://localhost:5000/app/createuser/ -d "username=(username)&password=password"
+curl http://localhost:5000/app/createuser/ -d "username=username&password=password"
 ```
 ```
 This username is already taken.
@@ -167,20 +167,30 @@ Username updated from username to newusername.
 ```
 Password did not match for user.
 ```
-### /app/user/delete/:username/
+### /app/user/delete/
 Responds with "Successfully deleted user username" if the user is deleted.
 Responds with "Incorrect passowrd" if the inputted password is wrong.
 #### Request body
 ```
-"password=(user password)"
+"username=(username)&password=(password)"
 ```
 #### Response body
 ```
-curl http://localhost:5000/app/user/info/delete/username -d "password=password"
+curl http://localhost:5000/app/user/info/delete -d "username=username&password=password"
 ```
 ```
 Successfully deleted user username.
 ```
 ```
 Incorrect password.
+```
+#### Response body
+```
+curl http://localhost:5000/app/logout/"
+```
+```
+Successfully logged out.
+```
+```
+You are not logged in.
 ```
