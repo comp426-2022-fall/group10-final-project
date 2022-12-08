@@ -92,7 +92,7 @@ expressApp.post("/app/createuser", (req, res) => {
     }
     var stmt = db.prepare('SELECT username FROM userinfo');
     const currentUsers = stmt.all();
-    for(var i in currentUsers){ // search if username already exists
+    for(var i in currentUsers){ 
         if (newUserData.username == currentUsers[i].username) {
             return res.status(200).send("This username is already taken.")
         }
