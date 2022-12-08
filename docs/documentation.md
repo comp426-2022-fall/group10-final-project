@@ -37,7 +37,7 @@ Responds "This user does not exist." if no username is found in database.
 #### Request body
 
 ```
-"username=username&password=password"
+"username=(username)&password=(user password)"
 ```
 
 #### Response body
@@ -86,7 +86,7 @@ curl http://localhost:5000/app/allusers/
 ### /app/post/
 #### Request body
 ```
-"post=message"
+"post=(message)"
 ```
 
 #### Response body
@@ -131,10 +131,14 @@ User username has made 5 posts.
 ```
 
 ### /app/user/info/update/:username/:password/
-Responds with "Password for :username updated successfully." if the password is updated.
-Responds with "Password did not match for user." if the user's password is wrong.
+Responds with "Password for :username updated successfully" if the password is updated.
+Responds with "Password did not match for user" if the user's password is wrong.
 :password in the endpoint is the new password while the arg -d is the original.
 
+#### Request body
+```
+{"password":"(user password)"}
+```
 #### Response body
 ```
 curl http://localhost:5000/app/user/info/update/username/newpassword -d "password=password"
