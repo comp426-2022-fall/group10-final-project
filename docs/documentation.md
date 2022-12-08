@@ -62,7 +62,7 @@ Responds "New user has been created." otherwise.
 #### Response body
 
 ```
-curl http://localhost:5000/app/createuser/ -d "username=username&password=password"
+curl http://localhost:5000/app/createuser/ -d "username=(username)&password=password"
 ```
 ```
 This username is already taken.
