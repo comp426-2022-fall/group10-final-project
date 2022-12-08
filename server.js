@@ -47,8 +47,8 @@ expressApp.post("/app/login", (req, res) => {  //for login
         var stmt = db.prepare('SELECT * FROM userinfo');
         const currentUsers = stmt.all();
         for(var i in currentUsers){
-            if (newUserData.username == currentUsers[i].username) {
-                if (newUserData.password == currentUsers[i].password) {
+            if (newUserData.username == currentUsers[i].username) { // check whether username in database
+                if (newUserData.password == currentUsers[i].password) { // verify password is correct
                     loggedIn = true;
                     currentUser = newUserData;
                     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
@@ -57,7 +57,7 @@ expressApp.post("/app/login", (req, res) => {  //for login
                 }   
             }
         }
-        return res.status(200).send("This user does not exist.")
+        return res.status(200).send("This user does not exist.") // username not found
     }
 });
 
@@ -68,7 +68,7 @@ expressApp.post("/app/createuser", (req, res) => {
     }
     var stmt = db.prepare('SELECT username FROM userinfo');
     const currentUsers = stmt.all();
-    for(var i in currentUsers){
+    for(var i in currentUsers){ // search if username already exists
         if (newUserData.username == currentUsers[i].username) {
             return res.status(200).send("This username is already taken.")
         }
@@ -121,10 +121,23 @@ expressApp.get('/app/user/info/:username/', (req, res, next) => {
     }
 })
 // Modify user info endpoint
-expressApp.post('/app/user/info/update/:username/', (req, res, next) => {
-    const stmt = db.prepare('UPDATE userinfo SET password = COALESCE(?, password) WHERE username = ?');
-    const info = stmt.run(req.body.password, req.params.username);
-    res.status(200).json(info);
+expressApp.post('/app/user/info/update/:username/:password', (req, res, next) => {
+    var newPassword = req.body.password
+    var password = req.params.password
+    var stmt = db.prepare('SELECT * FROM userinfo');
+    const currentUsers = stmt.all();
+    for(var i in currentUsers){ 
+        if (req.params.username == currentUsers[i].username) { // check whether username exists
+            if (password == currentUsers[i].password) { // verify password
+                var stmt = db.prepare('UPDATE userinfo SET password = COALESCE(?, password) WHERE username = ?');
+                const info = stmt.run(newPassword, req.params.username);
+                return res.status(200).send("Password for "+req.params.username+" updated successfully.");
+            } else {
+                return res.status(200).send("Password did not match for user.");
+            }
+        }
+    }
+    return res.status(200).send("Username not found."); // user not found
 })
 // Delete user info endpoint
 expressApp.get('/app/user/delete/:username', (req, res) => {
