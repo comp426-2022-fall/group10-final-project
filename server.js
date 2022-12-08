@@ -72,6 +72,16 @@ expressApp.post("/app/login", (req, res) => {
     }
 });
 
+expressApp.post("/app/logout", (req, res) => { 
+    if (loggedIn) {
+        currentUser = {}
+        loggedIn = false;
+        return res.status(200).send("Successfully logged out.")
+    } else {
+        return res.status(200).send("You are not logged in.")
+    }
+});
+
 // See /app/createuser/ documentation
 // Creates a user by taking in a username and password 
 // Adds the username and password to the database
