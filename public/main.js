@@ -34,13 +34,14 @@ function login() {
         return;
     }
     let postStuff1 = {username:tempUser,password:tempPass};
-    console.log(postStuff1);
+    console.log(JSON.stringify(postStuff1));
     fetch('http://localhost:5000/app/login', {
         method: 'POST',
+        body: JSON.stringify(postStuff1),
         headers: {
             'Content-Type': 'application/json',
-          },
-        body: JSON.stringify(postStuff1),
+        }
+        
     }).then(response => {
         return response.text();
     }).then(response => {

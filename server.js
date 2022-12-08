@@ -22,7 +22,10 @@ if(args.port == 4000){
 
 var loggedIn = false;
 var currentUser;
+expressApp.use(express.urlencoded({ extended: true }));
 
+// parse application/json
+expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.use(cors());
 expressApp.listen(port);
@@ -49,7 +52,7 @@ expressApp.post("/app/login", (req, res) => {
         username: req.body.username, 
         password: req.body.password
     }
-    console.log(newUserData.username + " eee" + newUserData.password);
+    console.log(req.body);
     if (loggedIn) {
         return res.status(200).send("You are already logged in as " + currentUser.username + ".")
     }else {
