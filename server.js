@@ -110,9 +110,11 @@ expressApp.get("/app/getpost/:username/", (req, res) => {
 
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
-        const stmt = db.prepare('SELECT * FROM userinfo WHERE username = ?');
-        const info = stmt.get(req.params.username);
-        res.status(200).json(info);
+        const stmt1 = db.prepare('SELECT * FROM posts WHERE username = ?');
+        const posts = stmt1.all(req.params.username);
+        const stmt2 = db.prepare('SELECT username FROM userinfo WHERE username = ?');
+        const info = stmt2.get(req.params.username);
+        res.status(200).send("User "+req.params.username+" has made " + posts.length+" posts.");
     }
     catch{
         console.error(e);
