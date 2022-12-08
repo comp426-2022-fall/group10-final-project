@@ -124,6 +124,8 @@ expressApp.get("/app/getpost/:username/", (req, res) => {
     res.status(200).send(info);
 });
 
+// See /app/user/info/:username/ documentation
+// Returns how many posts an individual user has made
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
         const stmt1 = db.prepare('SELECT * FROM posts WHERE username = ?');
