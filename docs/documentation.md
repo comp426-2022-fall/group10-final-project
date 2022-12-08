@@ -184,3 +184,13 @@ Successfully deleted user username.
 ```
 Incorrect password.
 ```
+#### Response body
+```
+curl http://localhost:5000/app/logout/"
+```
+```
+Successfully logged out.
+```
+```
+You are not logged in.
+```
