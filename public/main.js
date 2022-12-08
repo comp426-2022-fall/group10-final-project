@@ -133,13 +133,14 @@ function changePassword(){
         alert("Password cannot be blank.");
         return;
     }
+    let oldPassword = {password: savedPassword};
     let endpoint = 'http://localhost:5000/app/user/info/update/' + savedUsername + '/' + sign;
     fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         }, 
-        body: JSON.stringify(savedPassword),
+        body: JSON.stringify(oldPassword),
     }).then(response => {
         return response.text();
     }).then(response => {
