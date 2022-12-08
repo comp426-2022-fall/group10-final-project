@@ -130,13 +130,13 @@ curl http://localhost:5000/app/user/info/bekab
 User bekab has made 5 posts.
 ```
 
-### /app/user/info/update/:username/
+### /app/user/info/update/:username/:password/
 #### Response body
 ```
-curl http://localhost:5000/app/user/info/update/:username
+curl http://localhost:5000/app/user/info/update/bekab/password -d "password=word"
 ```
 ```
-
+Password for bekab updated successfully.
 ```
 ### /app/user/delete/:username/
 #### Response body

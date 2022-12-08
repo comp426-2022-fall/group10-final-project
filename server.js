@@ -142,8 +142,8 @@ expressApp.get('/app/user/info/:username/', (req, res, next) => {
 // Takes in the username and password for a user
 // Replaces the old password with the new password in the database
 expressApp.post('/app/user/info/update/:username/:password', (req, res, next) => {
-    var newPassword = req.body.password
-    var password = req.params.password
+    var password = req.body.password
+    var newPassword = req.params.password
     var stmt = db.prepare('SELECT * FROM userinfo');
     const currentUsers = stmt.all();
     for(var i in currentUsers){ 
