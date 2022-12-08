@@ -80,7 +80,7 @@ curl http://localhost:5000/app/allusers/
 ```
 
 ```json
-[{"username":"admin"},{"username":"bekab"},{"username":"user1"},{"username":"user2"}]
+[{"username":"admin"},{"username":"username"},{"username":"user1"},{"username":"user2"}]
 
 ```
 ### /app/post/
@@ -92,7 +92,7 @@ curl http://localhost:5000/app/allusers/
 #### Response body
 
 ```
-curl http://localhost:5000/app/post/ -d "post=blah"
+curl http://localhost:5000/app/post/ -d "post=Test post"
 ```
 ```json
 {"changes":1,"lastInsertRowid":10}
@@ -106,17 +106,17 @@ curl http://localhost:5000/app/allposts
 ```
 
 ```json
-[{"username":"bekab","post":"blah"},{"username":"user1","post":"hi user2"},{"username":"user2","post":"shut up"}]
+[{"username":"username","post":"Test post"},{"username":"user1","post":"hi user2"},{"username":"user2","post":"shut up"}]
 ```
 ### /app/getpost/:username
 
 #### Response body
 
 ```
-curl http://localhost:5000/app/getpost/bekab
+curl http://localhost:5000/app/getpost/username
 ```
 ```json
-[{"username":"bekab","post":"blah"}]
+[{"username":"username","post":"Test post"}]
 ```
 
 ### /app/user/info/:username
@@ -124,19 +124,19 @@ curl http://localhost:5000/app/getpost/bekab
 #### Response body
 
 ```
-curl http://localhost:5000/app/user/info/bekab
+curl http://localhost:5000/app/user/info/username
 ```
 ```
-User bekab has made 5 posts.
+User username has made 5 posts.
 ```
 
 ### /app/user/info/update/:username/:password/
 Responds with "Password for :username updated successfully" if the password is updated.
-:password in the endpoint is the new password while the arg -d gives the original.
+:password in the endpoint is the new password while the arg -d is the original.
 
 #### Response body
 ```
-curl http://localhost:5000/app/user/info/update/bekab/password -d "password=word"
+curl http://localhost:5000/app/user/info/update/username/newpassword -d "password=password"
 ```
 ```
 Password for bekab updated successfully.
@@ -144,7 +144,7 @@ Password for bekab updated successfully.
 ### /app/user/delete/:username/
 #### Response body
 ```
-curl http://localhost:5000/app/user/info/delete/bekab -d "password=word"
+curl http://localhost:5000/app/user/info/delete/username -d "password=password"
 ```
 ```
 
