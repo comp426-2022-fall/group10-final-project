@@ -107,6 +107,8 @@ expressApp.post("/app/post", (req, res) => {
     }
 });
 
+// See /app/allposts documentation
+// Returns all the posts in the database
 expressApp.get('/app/allposts', (req, res) => {
     const stmt = db.prepare('SELECT * FROM posts');
     const info = stmt.all();
