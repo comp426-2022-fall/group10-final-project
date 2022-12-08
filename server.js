@@ -159,7 +159,8 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
     }
     return res.status(200).send("Username not found."); // user not found
 })
-// Delete user info endpoint
+// See /app/user/delete documentation
+// Deletes the specified user from the database
 expressApp.get('/app/user/delete/:username', (req, res) => {
     const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
     const info = stmt.run(req.params.username);
