@@ -4,7 +4,6 @@ function refresh() {
     posts.forEach(element => {
         element.remove();
     });
-
     fetch('http://localhost:5000/app/allposts')
     .then(response => {
         return response.json();;
