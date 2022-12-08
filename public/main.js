@@ -3,7 +3,7 @@ var apiUrl = 'http://localhost:5000/app/allposts';
 fetch(apiUrl).then(response => {
     return response.json();;
 }).then(data => {
-    data.forEach(element => {
+    data.slice().reverse().forEach(element => {
         var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
         var text = document.createTextNode(temp);
         var element = document.createElement('div');
