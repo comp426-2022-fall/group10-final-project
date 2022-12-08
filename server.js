@@ -161,10 +161,22 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
 })
 // See /app/user/delete documentation
 // Deletes the specified user from the database
-expressApp.get('/app/user/delete/:username', (req, res) => {
-    const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
-    const info = stmt.run(req.params.username);
-    res.status(200).json(info);
+expressApp.post('/app/user/delete/:username', (req, res) => {
+    var password = req.body.password
+    var stmt = db.prepare('SELECT * FROM userinfo');
+    const currentUsers = stmt.all();
+    for(var i in currentUsers){
+        if (req.params.username == currentUsers[i].username) {
+            if (password == currentUsers[i].password) {
+                const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
+                const info = stmt.run(req.params.username);
+                return res.status(200).send("Successfully deleted user "+req.params.username);
+            } else {
+                return res.status(200).send("Incorrect password.")
+            }
+        }
+    }
+    return res.status(200).send("User not found.")
 })
 
 // Throws an error on any endpoint that is not specified
