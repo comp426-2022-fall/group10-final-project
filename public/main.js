@@ -136,6 +136,10 @@ function signup(){
         alert("Please enter a username and password");
         return;
     }
+    if (tempUser.includes(" ")){
+        alert("Username cannot contain spaces");
+        return;
+    }
     let postStuff = {username: tempUser, password: tempPass};
     fetch('http://localhost:5000/app/createuser', {
         method: 'POST',
