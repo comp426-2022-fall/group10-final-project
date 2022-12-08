@@ -74,7 +74,7 @@ expressApp.post("/app/login", (req, res) => {
 
 expressApp.post("/app/logout", (req, res) => { 
     if (loggedIn) {
-        currentUser = {}
+        currentUser = null
         loggedIn = false;
         return res.status(200).send("Successfully logged out.")
     } else {
