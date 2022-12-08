@@ -197,16 +197,17 @@ expressApp.post('/app/user/info/updatename/:username/:newusername', (req, res, n
 
 // See /app/user/delete documentation
 // Deletes the specified user from the database
-expressApp.post('/app/user/delete/:username', (req, res) => {
-    var password = req.body.password
+expressApp.post('/app/user/delete', (req, res) => {
+    let password = req.body.password;
+    let username = req.body.username;
     var stmt = db.prepare('SELECT * FROM userinfo');
     const currentUsers = stmt.all();
     for(var i in currentUsers){
-        if (req.params.username == currentUsers[i].username) {
+        if (username == currentUsers[i].username) {
             if (password == currentUsers[i].password) {
                 const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
-                const info = stmt.run(req.params.username);
-                return res.status(200).send("Successfully deleted user "+req.params.username+".");
+                const info = stmt.run(username);
+                return res.status(200).send("Successfully deleted user "+username+".");
             } else {
                 return res.status(200).send("Incorrect password.")
             }

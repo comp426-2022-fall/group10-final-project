@@ -1,35 +1,26 @@
-var apiUrl = 'http://localhost:5000/app/allposts';
-
-<<<<<<< HEAD
 function refresh() {
 
-    posts = document.getElementsByClassName("post");
-    for (var i = 0; i < posts.length; i++) {
-        posts[i].remove();
-    }
+    posts = Array.from(document.getElementsByClassName("post"));
+    posts.forEach(element => {
+        element.remove();
+    });
 
-
-    fetch(apiUrl).then(response => {
+    fetch('http://localhost:5000/app/allposts')
+    .then(response => {
         return response.json();;
     }).then(data => {
-        data.forEach(element => {
-=======
-fetch(apiUrl).then(response => {
-    return response.json();;
-}).then(data => {
-    data.slice().reverse().forEach(element => {
->>>>>>> 2f17d2e455287ae79447a99e525dadc0088251a8
-        var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
-        var text = document.createTextNode(temp);
-        var element = document.createElement('div');
-        element.classList.add("post")
-        // element.style.fontSize = '20px'
-        // element.style.margins = '14px 20px'
-        // element.style.border = '1px solid black'
-        // element.style.margin = '8px 0'
-        // element.style.padding = '5px'
-        element.appendChild(text);
-        document.body.appendChild(element);
+        data.slice().reverse().forEach(element => {
+            var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
+            var text = document.createTextNode(temp);
+            var element = document.createElement('div');
+            element.classList.add("post")
+            // element.style.fontSize = '20px'
+            // element.style.margins = '14px 20px'
+            // element.style.border = '1px solid black'
+            // element.style.margin = '8px 0'
+            // element.style.padding = '5px'
+            element.appendChild(text);
+            document.body.appendChild(element);
         });
     }).catch(err => {
         document.write(err);
@@ -100,23 +91,38 @@ function updateName(){
     var element = document.getElementById("userN");
     var element2 = document.getElementById("passW");
 
+    if (element == undefined || element == null || element2 == undefined || element2 == null){
+        element.innerHTML = "";
+        element2.innerHTML = "";
+        return;
+    }
+
     element.innerHTML = "Username: " + savedUsername;
     element2.innerHTML = "Password: " + savedPassword;
 }
 
 function deleteUser(){
-    var username = document.getElementById("userN");
+    if (savedUsername === undefined || savedUsername === null){
+        alert("No user is logged in");
+        return;
+    }
+    userInfo = {username: savedUsername, password: savedPassword};
     fetch('http://localhost:5000/app/user/delete', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         }, 
-        body: JSON.stringify(username),
+        body: JSON.stringify(userInfo),
     }).then(response => {
         return response.text();
+    }).then(response => {
+        savedPassword = undefined;
+        savedUsername = undefined;
+        updateName();
+        refresh();
     }).catch(err => {
         console.log(err);
-    })
+    });
 }
 
 function signup(){
@@ -153,10 +159,12 @@ function signup(){
 }
 
 function logout(){
-    if (savedUsername == undefined || savedUsername == null){
-        savedUsername = "";
-        savedPassword = "";
+    if (!(savedUsername === undefined || savedUsername === null)){
+        savedUsername = undefined;
+        savedPassword = undefined;
         updateName();
         refresh();
+    } else {
+        alert("No user is logged in");
     }
 }
