@@ -144,7 +144,7 @@ Password for bekab updated successfully.
 ### /app/user/delete/:username/
 #### Response body
 ```
-curl http://localhost:5000/app/user/info/update/:username
+curl http://localhost:5000/app/user/info/delete/bekab -d "password=word"
 ```
 ```
 
