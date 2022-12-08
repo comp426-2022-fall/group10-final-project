@@ -21,7 +21,7 @@ Our team has created Twitter 2.0. With the unfortunate state of Twitter today, o
     - Shows the post itself and the user who wrote it 
 
 ## Planning Documentation
-Not all these features all implemented but we plan on implementing them in the future.
+Not all these features are implemented but we plan on implementing them in the future.
 
 - Creating Twitter 2.0 (Forum Page)
     - Allows user to login to Twitter 2.0
@@ -43,3 +43,9 @@ Not all these features all implemented but we plan on implementing them in the f
     - [ ] Main forum/home page
     - [ ] Make post
     - [ ] Make reply
+
+## Team Management 
+- Front End Lead: Rohan Akki
+- Back End Lead: Beka Bililign
+- Database Lead: Lucy Ren
+- Design Lead: Valerie Shoemaker
