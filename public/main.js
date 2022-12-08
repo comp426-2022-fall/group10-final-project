@@ -42,7 +42,6 @@ function login() {
         return;
     }
     let postStuff1 = {username:tempUser,password:tempPass};
-    console.log(JSON.stringify(postStuff1));
     fetch('http://localhost:5000/app/login', {
         method: 'POST',
         body: JSON.stringify(postStuff1),
@@ -53,7 +52,6 @@ function login() {
     }).then(response => {
         return response.text();
     }).then(response => {
-        console.log(response);
         if (response.charAt(0) === 'T'){
             alert("No such User exists");
         } else {
