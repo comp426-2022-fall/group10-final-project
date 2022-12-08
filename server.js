@@ -20,8 +20,8 @@ if(args.port == 4000){
     port = 5000;
 }
 
-var loggedIn = false;
-var currentUser;
+let loggedIn = false;
+let currentUser;
 
 expressApp.use(express.urlencoded({ extended: true })); //extending to url encoded or json doesn't matter and then listen
 expressApp.use(cors());
@@ -62,15 +62,25 @@ expressApp.post("/app/login", (req, res) => {
                     currentUser = newUserData;
                     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
                     const info = stmt.run(newUserData.username, newUserData.password);
-                    var accessstmt = db.prepare(`INSERT INTO accesslog (user, access, time) VALUES ('newUserData.username', "Logged ${newUserData.username} in", "${Date.now}""`);
-                    const accessinfo = accessstmt.run();
+                    var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
+                    const accessinfo = accessstmt.run(currentUser.username,"Logged in as "+ newUserData.username, Date.now());
                     return res.status(200).send("Logged in as " + newUserData.username)
                 }   
             }
         }
-        var accessstmt = db.prepare(`INSERT INTO accesslog (user, access, time) VALUES ('newUserData.username', "Failed to log ${newUserData.username} in", "${Date.now}""`);
-        const accessinfo = accessstmt.run();
+        // var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
+        // const accessinfo = accessstmt.run(currentUser.username,"Logged in as "+ newUserData.username, Date.now());
         return res.status(200).send("This user does not exist.") // username not found
+    }
+});
+
+expressApp.get("/app/logout", (req, res) => { 
+    if(loggedIn) {
+        loggedIn = false;
+        currentUser = {}
+        return res.status(200).send("Successfully logged out.")
+    } else {
+        return res.status(200).send("You are not logged in.")
     }
 });
 
@@ -93,8 +103,8 @@ expressApp.post("/app/createuser", (req, res) => {
     currentUser = newUserData;
     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
     const info = stmt.run(newUserData.username, newUserData.password);
-    var accessstmt = db.prepare("INSERT INTO accesslog (user, access, time) VALUES ('newUserData.username', 'New user created", `${Date.now}`);
-    const accessinfo = accessstmt.run();
+    var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
+    const accessinfo = accessstmt.run(currentUser.username,"Logged in as "+ newUserData.username, Date.now());
     res.status(200).json("New user " + newUserData.username + " has been created.");
 })
 
@@ -103,6 +113,9 @@ expressApp.post("/app/createuser", (req, res) => {
 expressApp.get("/app/allusers", (req, res) => {
     const stmt = db.prepare('SELECT username FROM userinfo');
     const info = stmt.all();
+    const stmt2 = db.prepare('SELECT user FROM accessdb');
+    const info2 = stmt2.all();
+    console.log(info2)
     res.status(200).send(info);
 })
 

@@ -2,13 +2,12 @@
 import database from "better-sqlite3";
 //Create database connection
 const db = new database('data.db');
- const accessstmt = db.prepare(`SELECT name FROM sqlite_master WHERE type='table' and name='accesslog';`);
+ const accessstmt = db.prepare(`SELECT name FROM sqlite_master WHERE type='table' and name='accessdb';`);
  let accessRow = accessstmt.get();
  if(accessRow == undefined){
      console.log('Log database appears to be empty. Creating log database...');
      const sqlInit = `
-         CREATE TABLE accesslog (
-            id INTEGER PRIMARY KEY, 
+         CREATE TABLE accessdb (
             user VARCHAR,
             access VARCHAR,
             time VARCHAR
