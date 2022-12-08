@@ -124,6 +124,34 @@ function deleteUser(){
     });
 }
 
+function changePassword(){
+    if (savedUsername === undefined || savedUsername === null){
+        alert("No user is logged in");
+        return;
+    }
+    let sign = prompt("Input your new password: ")
+    if (sign === undefined || sign === null) {
+        alert("Password cannot be blank.");
+        return;
+    }
+    let endpoint = 'http://localhost:5000/app/user/info/update/' + savedUsername + '/' + sign;
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }, 
+        body: JSON.stringify(savedPassword),
+    }).then(response => {
+        return response.text();
+    }).then(response => {
+        savedPassword = sign;
+        updateName();
+        refresh();
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
 function signup(){
     tempUser = document.getElementById("user").value;
     tempPass = document.getElementById("pass").value;
