@@ -115,6 +115,9 @@ expressApp.get('/app/allposts', (req, res) => {
     res.status(200).send(info);
 })
 
+// See /app/getposts/:username/ documentation
+// Takes a username in as a parameter
+// Returns all posts from the specified user
 expressApp.get("/app/getpost/:username/", (req, res) => {
     const stmt = db.prepare('SELECT * FROM posts WHERE username = ?');
     const info = stmt.all(req.params.username);
