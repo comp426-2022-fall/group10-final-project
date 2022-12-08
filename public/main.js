@@ -78,7 +78,7 @@ function post() {
     }).then(response => {
         return response.text();
     }).then(response => {
-        resVal.textContent = response;
+        //resVal.textContent = response;
         refresh();
     }).catch(err => {
         console.log(err);
