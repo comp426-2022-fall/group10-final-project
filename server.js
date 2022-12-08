@@ -206,7 +206,7 @@ expressApp.post('/app/user/info/updatename/:username/:newusername', (req, res, n
             }
         }
     }
-    return res.status(200).send("Username not found."); // user not found
+    return res.status(200).send("Username not found.");
 })
 
 // See /app/user/delete documentation
