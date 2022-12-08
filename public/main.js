@@ -1,5 +1,6 @@
 var apiUrl = 'http://localhost:5000/app/allposts';
 
+<<<<<<< HEAD
 function refresh() {
 
     posts = document.getElementsByClassName("post");
@@ -12,6 +13,12 @@ function refresh() {
         return response.json();;
     }).then(data => {
         data.forEach(element => {
+=======
+fetch(apiUrl).then(response => {
+    return response.json();;
+}).then(data => {
+    data.slice().reverse().forEach(element => {
+>>>>>>> 2f17d2e455287ae79447a99e525dadc0088251a8
         var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
         var text = document.createTextNode(temp);
         var element = document.createElement('div');
@@ -39,7 +46,7 @@ function login() {
         alert("Please enter a username and password");
         return;
     }
-    if(tempUser == "" || tempPass == "") {
+    if(tempUser === "" || tempPass === "") {
         alert("Please enter a username and password");
         return;
     }
@@ -56,7 +63,7 @@ function login() {
         return response.text();
     }).then(response => {
         console.log(response);
-        if (response.charAt(0) == 'T'){
+        if (response.charAt(0) === 'T'){
             alert("No such User exists");
         } else {
             savedUsername = tempUser;
@@ -97,6 +104,21 @@ function updateName(){
     element2.innerHTML = "Password: " + savedPassword;
 }
 
+function deleteUser(){
+    var username = document.getElementById("userN");
+    fetch('http://localhost:5000/app/user/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }, 
+        body: JSON.stringify(username),
+    }).then(response => {
+        return response.text();
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
 function signup(){
     tempUser = document.getElementById("user").value;
     tempPass = document.getElementById("pass").value;
@@ -104,7 +126,7 @@ function signup(){
         alert("Please enter a username and password");
         return;
     }
-    if(tempUser == "" || tempPass == "") {
+    if(tempUser === "" || tempPass === "") {
         alert("Please enter a username and password");
         return;
     }
@@ -118,13 +140,12 @@ function signup(){
     }).then(response => {
         return response.text();
     }).then(response => {
-        if (response.charAt(0) == 'T'){
+        if (response.charAt(0) === 'T'){
             alert("Username already exists");
         }  else {
             savedUsername = tempUser;
             savedPassword = tempPass;
             updateName();
-            //console.log("User Logged In");
         } 
     }).catch(err => {
         console.log(err);
