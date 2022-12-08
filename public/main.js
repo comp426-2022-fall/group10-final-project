@@ -57,7 +57,7 @@ function login() {
 }
 
 function post() {
-    var responseValue = document.getElementById("response")
+    var resVal = document.getElementById("resVal")
     var postText = document.getElementById("post").value;
     let postStuff = {username: savedUsername, post: postText};
     fetch('http://localhost:5000/app/post/', {
@@ -69,7 +69,7 @@ function post() {
     }).then(response => {
         return response.text();
     }).then(response => {
-        responseValue.textContent = response;
+        resVal.textContent = response;
     }).catch(err => {
         console.log(err);
     });   
