@@ -68,8 +68,8 @@ expressApp.post("/app/login", (req, res) => {
                 }   
             }
         }
-        // var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
-        // const accessinfo = accessstmt.run(currentUser.username,"Logged in as "+ newUserData.username, Date.now());
+        var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
+        const accessinfo = accessstmt.run(currentUser.username,"Failed to login as "+ newUserData.username, Date.now());
         return res.status(200).send("This user does not exist.") // username not found
     }
 });
@@ -104,7 +104,7 @@ expressApp.post("/app/createuser", (req, res) => {
     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
     const info = stmt.run(newUserData.username, newUserData.password);
     var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
-    const accessinfo = accessstmt.run(currentUser.username,"Logged in as "+ newUserData.username, Date.now());
+    const accessinfo = accessstmt.run(currentUser.username,"Created user "+ newUserData.username, Date.now());
     res.status(200).json("New user " + newUserData.username + " has been created.");
 })
 
@@ -126,6 +126,8 @@ expressApp.post("/app/post", (req, res) => {
     if (loggedIn) {
         const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
         const info = stmt.run(currentUser.username, req.body.post);
+        var accessstmt = db.prepare(`INSERT INTO accessdb (user, access, time) VALUES (?, ?, ?)`);
+        const accessinfo = accessstmt.run(currentUser.username,"Posted as "+ newUserData.username, Date.now());
         res.status(200).json(info);
     } else {
         res.status(200).send("Please login to post.");
