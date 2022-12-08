@@ -52,7 +52,6 @@ expressApp.post("/app/login", (req, res) => {
         username: req.body.username, 
         password: req.body.password
     }
-    console.log(req.body);
     if (loggedIn) {
         return res.status(200).send("You are already logged in as " + currentUser.username + ".")
     }else {
