@@ -215,8 +215,8 @@ expressApp.post('/app/user/delete', (req, res) => {
     return res.status(200).send("User not found.")
 })
 
-// Throws an error on any endpoint that is not specified
-expressApp.get("*", (req, res) => { //handle 404
+// Throws a 404 Error on any endpoint that is not specified
+expressApp.get("*", (req, res) => {
     res.status(404).send("404 NOT FOUND");
 });
 
