@@ -1,4 +1,4 @@
-# group10-final-project
+# Twitter 2.0
 
 ## Planning Documentation
 
@@ -24,8 +24,4 @@
 
 ## Summary 
 
-COMP426 final project template boilerplate.
-All your code and documentation goes here.
-Change this text to be a brief description of your final project.
-Put the name of your project in the header above.
-You will change everything below to be the main technical documentation, as outlined below.
+Our team has created Twitter 2.0. With the unfortunate state of Twitter today, our group has taken it upon ourselves to create the future of social media. Twitter 2.0 is inclusive, user-friendly, and innovative. Easily make an account and create a post within seconds. Clearly, see all the information being stored about you, and if you really hate our app, just delete it! Twitter 2.0 because two Twitters is better than one.
