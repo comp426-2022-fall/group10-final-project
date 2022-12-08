@@ -42,7 +42,7 @@ Responds "200 OK" when not logged in. Responds "200 OK" "Currently logged in as:
 ```
 curl http://localhost:5000/app/
 ```
-```json
+```
 200 OK
 Currently logged in as: "username"
 ```
@@ -78,13 +78,13 @@ Responds "This user does not exist." if no username is found in database.
 ```
 curl http://localhost:5000/app/login/ -d "username=username&password=password"
 ```
-```json
+```
 "You are already logged in as otheruser."
 ```
-```json
+```
 "Logged in as username."
 ```
-```json
+```
 "This user does not exist"
 ```
 
@@ -159,7 +159,7 @@ curl http://localhost:5000/app/getpost/bekab
 ```
 curl http://localhost:5000/app/user/info/bekab
 ```
-```json
+```
 User bekab has made 5 posts.
 ```
 
