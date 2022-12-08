@@ -86,6 +86,21 @@ function updateName(){
     element2.innerHTML = "Password: " + savedPassword;
 }
 
+function deleteUser(){
+    var username = document.getElementById("userN");
+    fetch('http://localhost:5000/app/user/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }, 
+        body: JSON.stringify(username),
+    }).then(response => {
+        return response.text();
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
 function signup(){
     tempUser = document.getElementById("user").value;
     tempPass = document.getElementById("pass").value;
@@ -113,7 +128,6 @@ function signup(){
             savedUsername = tempUser;
             savedPassword = tempPass;
             updateName();
-            //console.log("User Logged In");
         } 
     }).catch(err => {
         console.log(err);
