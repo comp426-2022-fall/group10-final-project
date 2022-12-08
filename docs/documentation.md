@@ -49,7 +49,7 @@ curl http://localhost:5000/app/login/ -d "username=username&password=password"
 "You are already logged in as other user."
 ```
 ```
-"Logged in as username."
+"Logged in as (username)."
 ```
 ```
 "This user does not exist"
