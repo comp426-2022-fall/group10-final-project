@@ -35,8 +35,10 @@ expressApp.get("/app", (req, res) => {
     }
 });
 
-
-expressApp.post("/app/login", (req, res) => {  //for login
+// See /app/login/ 
+// Enter username and password
+// Checks to see if username and password are in the database
+expressApp.post("/app/login", (req, res) => { 
     let newUserData = {
         username: req.body.username, 
         password: req.body.password,
@@ -48,8 +50,8 @@ expressApp.post("/app/login", (req, res) => {  //for login
         var stmt = db.prepare('SELECT * FROM userinfo');
         const currentUsers = stmt.all();
         for(var i in currentUsers){
-            if (newUserData.username == currentUsers[i].username) { // check whether username in database
-                if (newUserData.password == currentUsers[i].password) { // verify password is correct
+            if (newUserData.username == currentUsers[i].username) {
+                if (newUserData.password == currentUsers[i].password) {
                     loggedIn = true;
                     currentUser = newUserData;
                     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
