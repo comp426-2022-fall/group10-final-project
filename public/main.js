@@ -26,7 +26,7 @@ function refresh() {
     });
 }
 
-refresh();
+refresh(); //gotta run this at html load
 var savedUsername;
 var savedPassword;
 function login() {
@@ -90,7 +90,7 @@ function updateName(){
     var element = document.getElementById("userN");
     var element2 = document.getElementById("passW");
 
-    if (element == undefined || element == null || element2 == undefined || element2 == null){
+    if (element.innerText == undefined || element.innerText == null || element2.innerText == undefined || element2.innerText == null){
         element.innerHTML = "";
         element2.innerHTML = "";
         return;
