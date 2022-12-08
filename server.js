@@ -1,5 +1,5 @@
 import minimist from "minimist";
-import express, { json }  from "express";
+import express from "express";
 import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
