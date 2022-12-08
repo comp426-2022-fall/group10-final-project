@@ -1,5 +1,5 @@
 import minimist from "minimist";
-import express, { json }  from "express";
+import express from "express";
 import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
@@ -14,7 +14,7 @@ const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
 
-var port = args.port || 5000; //either the port or 5000
+var port = args.port || 5000; 
 if(args.port == 4000){
     console.log("4000 is used for webpage. Server redirected to port 5000.");
     port = 5000;
