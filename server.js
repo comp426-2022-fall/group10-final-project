@@ -1,10 +1,8 @@
-//import {roll} from "./lib/roll.js";
 import minimist from "minimist";
 import express, { json }  from "express";
 import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
-import http from 'http';
 import cors from 'cors';
 
 let args = minimist(process.argv.slice(2));
@@ -25,17 +23,22 @@ expressApp.listen(port);
 
 expressApp.use(express.static('./public'))
 
-expressApp.get("/app", (req, res) => { //get request
+// See /app/ documentation
+// returns 200 OK message
+// checks if logged in and returns the users username
+expressApp.get("/app", (req, res) => {
     if (loggedIn) {
         return res.status(200).send("200 OK\nCurrently logged in as: "+currentUser.username);
     }
     else {
         return res.status(200).end()
     }
-     //send 200 OK for the first thing
 });
-//currently only setup some of the endpoints
-expressApp.post("/app/login", (req, res) => {  //for login
+
+// See /app/login/ documentation
+// Enter username and password
+// Checks to see if username and password are in the database
+expressApp.post("/app/login", (req, res) => { 
     let newUserData = {
         username: req.body.username, 
         password: req.body.password,
@@ -47,8 +50,8 @@ expressApp.post("/app/login", (req, res) => {  //for login
         var stmt = db.prepare('SELECT * FROM userinfo');
         const currentUsers = stmt.all();
         for(var i in currentUsers){
-            if (newUserData.username == currentUsers[i].username) { // check whether username in database
-                if (newUserData.password == currentUsers[i].password) { // verify password is correct
+            if (newUserData.username == currentUsers[i].username) {
+                if (newUserData.password == currentUsers[i].password) {
                     loggedIn = true;
                     currentUser = newUserData;
                     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
@@ -61,6 +64,9 @@ expressApp.post("/app/login", (req, res) => {  //for login
     }
 });
 
+// See /app/createuser/ documentation
+// Creates a user by taking in a username and password 
+// Adds the username and password to the database
 expressApp.post("/app/createuser", (req, res) => {
     let newUserData = {
         username: req.body.username, 
@@ -80,12 +86,17 @@ expressApp.post("/app/createuser", (req, res) => {
     res.status(200).json("New user " + newUserData.username + " has been created.");
 })
 
+// See /app/allusers documentation
+// Returns all the users in the database
 expressApp.get("/app/allusers", (req, res) => {
     const stmt = db.prepare('SELECT username FROM userinfo');
     const info = stmt.all();
     res.status(200).send(info);
 })
 
+// See /app/post documentation
+// Takes the logged in user's username
+// Adds a post to the post database with the signed in user
 expressApp.post("/app/post", (req, res) => { 
     if (loggedIn) {
         const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
@@ -96,18 +107,25 @@ expressApp.post("/app/post", (req, res) => {
     }
 });
 
+// See /app/allposts documentation
+// Returns all the posts in the database
 expressApp.get('/app/allposts', (req, res) => {
     const stmt = db.prepare('SELECT * FROM posts');
     const info = stmt.all();
     res.status(200).send(info);
 })
 
+// See /app/getposts/:username/ documentation
+// Takes a username in as a parameter
+// Returns all posts from the specified user
 expressApp.get("/app/getpost/:username/", (req, res) => {
     const stmt = db.prepare('SELECT * FROM posts WHERE username = ?');
     const info = stmt.all(req.params.username);
     res.status(200).send(info);
 });
 
+// See /app/user/info/:username/ documentation
+// Returns how many posts an individual user has made
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
         const stmt1 = db.prepare('SELECT * FROM posts WHERE username = ?');
@@ -120,10 +138,12 @@ expressApp.get('/app/user/info/:username/', (req, res, next) => {
         console.error(e);
     }
 })
-// Modify user info endpoint
+// See /app/user/info/update/:username/:password documentation
+// Takes in the username and password for a user
+// Replaces the old password with the new password in the database
 expressApp.post('/app/user/info/update/:username/:password', (req, res, next) => {
-    var newPassword = req.body.password
-    var password = req.params.password
+    var password = req.body.password
+    var newPassword = req.params.password
     var stmt = db.prepare('SELECT * FROM userinfo');
     const currentUsers = stmt.all();
     for(var i in currentUsers){ 
@@ -139,14 +159,15 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
     }
     return res.status(200).send("Username not found."); // user not found
 })
-// Delete user info endpoint
+// See /app/user/delete documentation
+// Deletes the specified user from the database
 expressApp.get('/app/user/delete/:username', (req, res) => {
     const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
     const info = stmt.run(req.params.username);
     res.status(200).json(info);
 })
 
-
+// Throws an error on any endpoint that is not specified
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
 });
@@ -156,21 +177,3 @@ expressApp.get("*", (req, res) => { //handle 404
 const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
-
-
-// fs.readFile(`./public`, 'utf8', (err, data) => {
-//     if (err) {
-//         console.error(err);
-//         return;
-//       }
-    
-//     const server = http.createServer((req, res) => {
-//         res.statusCode = 200
-//         res.setHeader('Content-Type', 'text/html');
-//         res.end(data);
-//       })
-    
-//     server.listen(4000, () => {
-//         console.log(`Website Server listening on port 4000`);
-//       });
-//     });
