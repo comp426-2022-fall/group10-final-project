@@ -124,6 +124,8 @@ expressApp.get("/app/getpost/:username/", (req, res) => {
     res.status(200).send(info);
 });
 
+// See /app/user/info/:username/ documentation
+// Returns how many posts an individual user has made
 expressApp.get('/app/user/info/:username/', (req, res, next) => {
     try{
         const stmt1 = db.prepare('SELECT * FROM posts WHERE username = ?');
@@ -136,7 +138,9 @@ expressApp.get('/app/user/info/:username/', (req, res, next) => {
         console.error(e);
     }
 })
-// Modify user info endpoint
+// See /app/user/info/update/:username/:password documentation
+// Takes in the username and password for a user
+// Replaces the old password with the new password in the database
 expressApp.post('/app/user/info/update/:username/:password', (req, res, next) => {
     var newPassword = req.body.password
     var password = req.params.password
@@ -155,14 +159,15 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
     }
     return res.status(200).send("Username not found."); // user not found
 })
-// Delete user info endpoint
+// See /app/user/delete documentation
+// Deletes the specified user from the database
 expressApp.get('/app/user/delete/:username', (req, res) => {
     const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
     const info = stmt.run(req.params.username);
     res.status(200).json(info);
 })
 
-
+// Throws an error on any endpoint that is not specified
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
 });
