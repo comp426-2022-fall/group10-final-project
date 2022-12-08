@@ -4,6 +4,13 @@
 
 Our team has created Twitter 2.0. With the unfortunate state of Twitter today, our group has taken it upon ourselves to create the future of social media. Twitter 2.0 is inclusive, user-friendly, and innovative. Easily make an account and create a post within seconds. Clearly, see all the information being stored about you, and if you really hate our app, just delete it! Twitter 2.0 because two Twitters is better than one.
 
+## Setup
+1. Clone the repository 
+2. Run npm install to install any dependencies.
+3. Run node server.js to start a server on port 5000.
+4. Go to localhost:5000 in your browser which will bring you to Twitter 2.0
+5. Make an account and post to Twitter 2.0
+
 ## Implemented
 - User Database
     - Stores all the data about users
@@ -55,3 +62,19 @@ Not all these features are implemented but we plan on implementing them in the f
 - Back End Lead: Beka Bililign
 - Database Lead: Lucy Ren
 - Design Lead: Valerie Shoemaker
+
+## Demo
+Here's a quick demo of Twitter 2.0
+https://www.youtube.com/watch?v=vi_Rgal7oXk
+
+## Dependencies
+- better-sqlite3
+- cors
+- express
+- minimist 
+- morgan
+
+## Databases 
+- User Database
+- Access Log Database 
+- Posts Database
