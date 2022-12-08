@@ -1,5 +1,5 @@
 import minimist from "minimist";
-import express, { json }  from "express";
+import express from "express";
 import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
@@ -14,7 +14,7 @@ const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
 
-var port = args.port || 5000; //either the port or 5000
+var port = args.port || 5000; 
 if(args.port == 4000){
     console.log("4000 is used for webpage. Server redirected to port 5000.");
     port = 5000;
@@ -68,7 +68,7 @@ expressApp.post("/app/login", (req, res) => {
                 }   
             }
         }
-        return res.status(200).send("This user does not exist.") // username not found
+        return res.status(200).send("This user does not exist.") 
     }
 });
 
@@ -187,8 +187,13 @@ expressApp.post('/app/user/info/updatename/:username/:newusername', (req, res, n
     var stmt = db.prepare('SELECT * FROM userinfo');
     const currentUsers = stmt.all();
     for(var i in currentUsers){ 
-        if (req.params.username == currentUsers[i].username) {
-            if (password == currentUsers[i].password) { 
+        if (req.params.username == currentUsers[i].username) { // check whether username exists
+            if (password == currentUsers[i].password) { // verify password
+                for (var j in currentUsers) {
+                    if (newusername == currentUsers[j].username) {
+                        return res.status(200).send("This username is already taken.");
+                    }
+                }
                 var stmt = db.prepare('UPDATE userinfo SET username = ? WHERE username = ?');
                 const info = stmt.run(newusername, req.params.username);
                 currentUser = {
