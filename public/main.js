@@ -54,3 +54,21 @@ function login() {
         console.log(err);
     });        
 }
+
+function post() {
+    var response = document.getElementById("response")
+    var postText = document.getElementById("post").value;
+    let postStuff = {username: savedUsername, post: postText};
+    fetch('http://localhost:5000/app/post/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(postStuff),
+    }).then(response => {
+        response.textContent = response.text();
+        return response.text();
+    }).catch(err => {
+        console.log(err);
+    });   
+}
