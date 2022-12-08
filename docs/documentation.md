@@ -37,7 +37,7 @@ Responds "This user does not exist." if no username is found in database.
 #### Request body
 
 ```
-"username=(username)&password=(user password)"
+"username=(username)&password=(password)"
 ```
 
 #### Response body
@@ -46,10 +46,10 @@ Responds "This user does not exist." if no username is found in database.
 curl http://localhost:5000/app/login/ -d "username=username&password=password"
 ```
 ```
-"You are already logged in as otheruser."
+"You are already logged in as other user."
 ```
 ```
-"Logged in as username."
+"Logged in as (username)."
 ```
 ```
 "This user does not exist"
@@ -62,7 +62,7 @@ Responds "New user has been created." otherwise.
 #### Response body
 
 ```
-curl http://localhost:5000/app/createuser/ -d "username=username&password=password"
+curl http://localhost:5000/app/createuser/ -d "username=(username)&password=password"
 ```
 ```
 This username is already taken.
