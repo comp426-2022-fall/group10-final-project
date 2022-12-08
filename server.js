@@ -183,8 +183,13 @@ expressApp.post('/app/user/info/updatename/:username/:newusername', (req, res, n
     var stmt = db.prepare('SELECT * FROM userinfo');
     const currentUsers = stmt.all();
     for(var i in currentUsers){ 
-        if (req.params.username == currentUsers[i].username) {
-            if (password == currentUsers[i].password) { 
+        if (req.params.username == currentUsers[i].username) { // check whether username exists
+            if (password == currentUsers[i].password) { // verify password
+                for (var j in currentUsers) {
+                    if (newusername == currentUsers[j].username) {
+                        return res.status(200).send("This username is already taken.");
+                    }
+                }
                 var stmt = db.prepare('UPDATE userinfo SET username = ? WHERE username = ?');
                 const info = stmt.run(newusername, req.params.username);
                 currentUser = {
