@@ -69,6 +69,12 @@ function post() {
     var resVal = document.getElementById("resVal")
     var postText = document.getElementById("post").value;
     let postStuff = {username: savedUsername, post: postText};
+
+    if (savedUsername === undefined || savedUsername === null){
+        alert("No user is logged in");
+        return;
+    }
+
     fetch('http://localhost:5000/app/post/', {
         method: 'POST',
         headers: {
@@ -152,6 +158,11 @@ function changePassword(){
     });
 }
 
+function clearLoginStuff(){
+    document.getElementById("user").value = "";
+    document.getElementById("pass").value = "";
+}
+
 function changeUsername(){
     if (savedUsername === undefined || savedUsername === null){
         alert("No user is logged in");
@@ -223,10 +234,24 @@ function signup(){
 
 function logout(){
     if (!(savedUsername === undefined || savedUsername === null)){
-        savedUsername = undefined;
-        savedPassword = undefined;
-        updateName();
-        refresh();
+        fetch('http://localhost:5000/app/logout')
+        .then(response => { 
+            return response.text();
+        }).then (response => {
+            console.log(response);
+            if (response.charAt(0) === 'S'){
+                savedUsername = undefined;
+                savedPassword = undefined;
+                updateName();
+                refresh();
+            } else if (response.charAt(0) === 'Y') {
+                alert("You should not be getting this error");
+            } else {
+                alert("Backend error, you are not logged in");
+            }
+        }).catch(err => {
+            console.log(err);
+        });
     } else {
         alert("No user is logged in");
     }

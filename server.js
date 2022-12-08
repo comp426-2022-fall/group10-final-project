@@ -60,21 +60,21 @@ expressApp.post("/app/login", (req, res) => {
                     currentUser = newUserData;
                     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
                     const info = stmt.run(newUserData.username, newUserData.password);
-                    return res.status(200).send("Logged in as " + newUserData.username)
+                    return res.status(200).send("Logged in as " + newUserData.username);
                 }   
             }
         }
-        return res.status(200).send("This user does not exist.") 
+        return res.status(200).send("This user does not exist.");
     }
 });
 
-expressApp.post("/app/logout", (req, res) => { 
+expressApp.get("/app/logout", (req, res) => { 
     if (loggedIn) {
-        currentUser = null
+        currentUser = null;
         loggedIn = false;
-        return res.status(200).send("Successfully logged out.")
+        return res.status(200).send("Successfully logged out.");
     } else {
-        return res.status(200).send("You are not logged in.")
+        return res.status(200).send("You are not logged in.");
     }
 });
 
@@ -90,7 +90,7 @@ expressApp.post("/app/createuser", (req, res) => {
     const currentUsers = stmt.all();
     for(var i in currentUsers){ 
         if (newUserData.username == currentUsers[i].username) {
-            return res.status(200).send("This username is already taken.")
+            return res.status(200).send("This username is already taken.");
         }
     }
     loggedIn = true;
@@ -217,6 +217,7 @@ expressApp.post('/app/user/delete', (req, res) => {
             if (password == currentUsers[i].password) {
                 const stmt = db.prepare('DELETE FROM userinfo WHERE username = ?');
                 const info = stmt.run(username);
+                loggedIn = false;
                 return res.status(200).send("Successfully deleted user "+username+".");
             } else {
                 return res.status(200).send("Incorrect password.")
