@@ -94,6 +94,9 @@ expressApp.get("/app/allusers", (req, res) => {
     res.status(200).send(info);
 })
 
+// See /app/post documentation
+// Takes the logged in user's username
+// Adds a post to the post database with the signed in user
 expressApp.post("/app/post", (req, res) => { 
     if (loggedIn) {
         const stmt = db.prepare('INSERT INTO posts (username, post) VALUES (?, ?)');
