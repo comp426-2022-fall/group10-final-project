@@ -48,7 +48,68 @@ function login() {
         } else {
             savedUsername = tempUser;
             savedPassword = tempPass;
-            console.log("User Logged In");
+            updateName();
+            //console.log("User Logged In");
+        } 
+    }).catch(err => {
+        console.log(err);
+    });        
+}
+
+function post() {
+    var response = document.getElementById("response")
+    var postText = document.getElementById("post").value;
+    let postStuff = {username: savedUsername, post: postText};
+    fetch('http://localhost:5000/app/post/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(postStuff),
+    }).then(response => {
+        response.textContent = response.text();
+        return response.text();
+    }).catch(err => {
+        console.log(err);
+    });   
+}
+
+function updateName(){
+    var element = document.getElementById("userN");
+    var element2 = document.getElementById("passW");
+
+    element.innerHTML = "Username: " + savedUsername;
+    element2.innerHTML = "Password: " + savedPassword;
+}
+
+function signup(){
+    tempUser = document.getElementById("user").value;
+    tempPass = document.getElementById("pass").value;
+    if (!tempUser || !tempPass) {
+        alert("Please enter a username and password");
+        return;
+    }
+    if(tempUser == "" || tempPass == "") {
+        alert("Please enter a username and password");
+        return;
+    }
+    let postStuff = {username: tempUser, password: tempPass};
+    fetch('http://localhost:5000/app/createuser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(postStuff),
+    }).then(response => {
+        return response.text();
+    }).then(response => {
+        if (response.charAt(0) == 'T'){
+            alert("Username already exists");
+        }  else {
+            savedUsername = tempUser;
+            savedPassword = tempPass;
+            updateName();
+            //console.log("User Logged In");
         } 
     }).catch(err => {
         console.log(err);

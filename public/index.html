@@ -12,12 +12,16 @@
 			<input type="text" id="pass" placeholder="Password">
 			<br><br>
 			<button type="button" id="login" onclick="login()">Login</button>
-			<button type="button" id="login" onclick="signup()">Signup</button>
+			<button type="button" id="signup" onclick="signup()">Signup</button>
 			<br><br>
+			<label id="userN"></label>
+			<label id="passW"></label>
 			<h1>Posts</h1>
 
 			<label for="post"><b>Enter your post here:</b></label>
-    		<input type="text" name="post" required>
+    		<input type="text" id="post" name="post" required>
+			<button type="button" onclick="post()"><b>Post</b></button>
+			<p id="response"></p>
 
 			<script src="main.js"></script>
     	</body>
