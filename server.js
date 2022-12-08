@@ -68,7 +68,7 @@ expressApp.post("/app/login", (req, res) => {
                 }   
             }
         }
-        return res.status(200).send("This user does not exist.") // username not found
+        return res.status(200).send("This user does not exist.") 
     }
 });
 
