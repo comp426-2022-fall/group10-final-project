@@ -131,6 +131,9 @@ User bekab has made 5 posts.
 ```
 
 ### /app/user/info/update/:username/:password/
+Responds with "Password for :username updated successfully" if the password is updated.
+:password in the endpoint is the new password while the arg -d gives the original.
+
 #### Response body
 ```
 curl http://localhost:5000/app/user/info/update/bekab/password -d "password=word"
