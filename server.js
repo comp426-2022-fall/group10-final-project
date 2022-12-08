@@ -138,7 +138,9 @@ expressApp.get('/app/user/info/:username/', (req, res, next) => {
         console.error(e);
     }
 })
-// Modify user info endpoint
+// See /app/user/info/update/:username/:password documentation
+// Takes in the username and password for a user
+// Replaces the old password with the new password in the database
 expressApp.post('/app/user/info/update/:username/:password', (req, res, next) => {
     var newPassword = req.body.password
     var password = req.params.password
