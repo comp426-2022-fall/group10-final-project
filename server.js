@@ -35,7 +35,7 @@ expressApp.get("/app", (req, res) => {
     }
 });
 
-// See /app/login/ 
+// See /app/login/ documentation
 // Enter username and password
 // Checks to see if username and password are in the database
 expressApp.post("/app/login", (req, res) => { 
@@ -64,6 +64,9 @@ expressApp.post("/app/login", (req, res) => {
     }
 });
 
+// See /app/createuser/ documentation
+// Creates a user by taking in a username and password 
+// Adds the username and password to the database
 expressApp.post("/app/createuser", (req, res) => {
     let newUserData = {
         username: req.body.username, 
