@@ -86,6 +86,8 @@ expressApp.post("/app/createuser", (req, res) => {
     res.status(200).json("New user " + newUserData.username + " has been created.");
 })
 
+// See /app/allusers documentation
+// Returns all the users in the database
 expressApp.get("/app/allusers", (req, res) => {
     const stmt = db.prepare('SELECT username FROM userinfo');
     const info = stmt.all();
