@@ -26,9 +26,10 @@ function refresh() {
     });
 }
 
-refresh();
+refresh(); //gotta run this at html load
 var savedUsername;
 var savedPassword;
+
 function login() {
     tempUser = document.getElementById("user").value;
     tempPass = document.getElementById("pass").value;
@@ -41,7 +42,6 @@ function login() {
         return;
     }
     let postStuff1 = {username:tempUser,password:tempPass};
-    console.log(JSON.stringify(postStuff1));
     fetch('http://localhost:5000/app/login', {
         method: 'POST',
         body: JSON.stringify(postStuff1),
@@ -52,7 +52,6 @@ function login() {
     }).then(response => {
         return response.text();
     }).then(response => {
-        console.log(response);
         if (response.charAt(0) === 'T'){
             alert("No such User exists");
         } else {
@@ -90,7 +89,7 @@ function updateName(){
     var element = document.getElementById("userN");
     var element2 = document.getElementById("passW");
 
-    if (element == undefined || element == null || element2 == undefined || element2 == null){
+    if (savedUsername === undefined || savedUsername === null || savedPassword === undefined || savedPassword === null){
         element.innerHTML = "";
         element2.innerHTML = "";
         return;
@@ -161,6 +160,10 @@ function signup(){
     }
     if(tempUser === "" || tempPass === "") {
         alert("Please enter a username and password");
+        return;
+    }
+    if (tempUser.includes(" ")){
+        alert("Username cannot contain spaces");
         return;
     }
     let postStuff = {username: tempUser, password: tempPass};
