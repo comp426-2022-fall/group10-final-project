@@ -1,10 +1,8 @@
-//import {roll} from "./lib/roll.js";
 import minimist from "minimist";
 import express, { json }  from "express";
 import morgan from "morgan";
 import fs from "fs";
 import db from './database.js';
-import http from 'http';
 import cors from 'cors';
 
 let args = minimist(process.argv.slice(2));
@@ -156,21 +154,3 @@ expressApp.get("*", (req, res) => { //handle 404
 const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 //Use morgan to log every API call
 expressApp.use(morgan('combined', { stream: accesslog }));
-
-
-// fs.readFile(`./public`, 'utf8', (err, data) => {
-//     if (err) {
-//         console.error(err);
-//         return;
-//       }
-    
-//     const server = http.createServer((req, res) => {
-//         res.statusCode = 200
-//         res.setHeader('Content-Type', 'text/html');
-//         res.end(data);
-//       })
-    
-//     server.listen(4000, () => {
-//         console.log(`Website Server listening on port 4000`);
-//       });
-//     });
