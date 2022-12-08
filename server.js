@@ -167,7 +167,7 @@ expressApp.get('/app/user/delete/:username', (req, res) => {
     res.status(200).json(info);
 })
 
-
+// Throws an error on any endpoint that is not specified
 expressApp.get("*", (req, res) => { //handle 404
     res.status(404).send("404 NOT FOUND");
 });
