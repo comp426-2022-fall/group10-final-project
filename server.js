@@ -92,7 +92,7 @@ expressApp.post("/app/createuser", (req, res) => {
     }
     var stmt = db.prepare('SELECT username FROM userinfo');
     const currentUsers = stmt.all();
-    for(var i in currentUsers){ // search if username already exists
+    for(var i in currentUsers){ 
         if (newUserData.username == currentUsers[i].username) {
             return res.status(200).send("This username is already taken.")
         }
@@ -165,8 +165,8 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
     var stmt = db.prepare('SELECT * FROM userinfo');
     const currentUsers = stmt.all();
     for(var i in currentUsers){ 
-        if (req.params.username == currentUsers[i].username) { // check whether username exists
-            if (password == currentUsers[i].password) { // verify password
+        if (req.params.username == currentUsers[i].username) {
+            if (password == currentUsers[i].password) { 
                 var stmt = db.prepare('UPDATE userinfo SET password = COALESCE(?, password) WHERE username = ?');
                 const info = stmt.run(newPassword, req.params.username);
                 return res.status(200).send("Password for "+req.params.username+" updated successfully.");
@@ -175,7 +175,7 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
             }
         }
     }
-    return res.status(200).send("Username not found."); // user not found
+    return res.status(200).send("Username not found."); 
 })
 
 // See /app/user/info/updatename/:username/:newusername documentation
