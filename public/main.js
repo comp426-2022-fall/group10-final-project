@@ -1,35 +1,26 @@
-var apiUrl = 'http://localhost:5000/app/allposts';
-
-<<<<<<< HEAD
 function refresh() {
 
-    posts = document.getElementsByClassName("post");
-    for (var i = 0; i < posts.length; i++) {
-        posts[i].remove();
-    }
-
-
-    fetch(apiUrl).then(response => {
+    posts = Array.from(document.getElementsByClassName("post"));
+    posts.forEach(element => {
+        element.remove();
+    });
+    
+    fetch('http://localhost:5000/app/allposts')
+    .then(response => {
         return response.json();;
     }).then(data => {
-        data.forEach(element => {
-=======
-fetch(apiUrl).then(response => {
-    return response.json();;
-}).then(data => {
-    data.slice().reverse().forEach(element => {
->>>>>>> 2f17d2e455287ae79447a99e525dadc0088251a8
-        var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
-        var text = document.createTextNode(temp);
-        var element = document.createElement('div');
-        element.classList.add("post")
-        // element.style.fontSize = '20px'
-        // element.style.margins = '14px 20px'
-        // element.style.border = '1px solid black'
-        // element.style.margin = '8px 0'
-        // element.style.padding = '5px'
-        element.appendChild(text);
-        document.body.appendChild(element);
+        data.slice().reverse().forEach(element => {
+            var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
+            var text = document.createTextNode(temp);
+            var element = document.createElement('div');
+            element.classList.add("post")
+            // element.style.fontSize = '20px'
+            // element.style.margins = '14px 20px'
+            // element.style.border = '1px solid black'
+            // element.style.margin = '8px 0'
+            // element.style.padding = '5px'
+            element.appendChild(text);
+            document.body.appendChild(element);
         });
     }).catch(err => {
         document.write(err);
