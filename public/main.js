@@ -1,4 +1,5 @@
 var apiUrl = 'http://localhost:5000/app/allposts';
+
 fetch(apiUrl).then(response => {
     return response.json();;
 }).then(data => {
@@ -18,3 +19,38 @@ fetch(apiUrl).then(response => {
 }).catch(err => {
     document.write(err);
 });
+
+var savedUsername = "penis";
+var savedPassword = "beka";
+function login() {
+    tempUser = document.getElementById("user").value;
+    tempPass = document.getElementById("pass").value;
+    if (!tempUser || !tempPass) {
+        alert("Please enter a username and password");
+        return;
+    }
+    if(tempUser == "" || tempPass == "") {
+        alert("Please enter a username and password");
+        return;
+    }
+    let postStuff = {username: tempUser, password: tempPass};
+    fetch('http://localhost:5000/app/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(postStuff),
+    }).then(response => {
+        return response.text();
+    }).then(response => {
+        if (response.charAt(0) == 'T'){
+            alert("No such User exists");
+        } else {
+            savedUsername = tempUser;
+            savedPassword = tempPass;
+            console.log("User Logged In");
+        } 
+    }).catch(err => {
+        console.log(err);
+    });        
+}
