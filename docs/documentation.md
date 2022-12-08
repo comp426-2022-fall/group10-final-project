@@ -37,7 +37,7 @@ Responds "This user does not exist." if no username is found in database.
 #### Request body
 
 ```
-"username=(username)&password=(user password)"
+"username=(username)&password=(password)"
 ```
 
 #### Response body
