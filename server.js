@@ -62,10 +62,14 @@ expressApp.post("/app/login", (req, res) => {
                     currentUser = newUserData;
                     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
                     const info = stmt.run(newUserData.username, newUserData.password);
+                    var accessstmt = db.prepare(`INSERT INTO accesslog (user, access, time) VALUES ('newUserData.username', "Logged ${newUserData.username} in", "${Date.now}""`);
+                    const accessinfo = accessstmt.run();
                     return res.status(200).send("Logged in as " + newUserData.username)
                 }   
             }
         }
+        var accessstmt = db.prepare(`INSERT INTO accesslog (user, access, time) VALUES ('newUserData.username', "Failed to log ${newUserData.username} in", "${Date.now}""`);
+        const accessinfo = accessstmt.run();
         return res.status(200).send("This user does not exist.") // username not found
     }
 });
@@ -89,6 +93,8 @@ expressApp.post("/app/createuser", (req, res) => {
     currentUser = newUserData;
     var stmt = db.prepare('INSERT INTO userinfo (username, password) VALUES (?, ?)');
     const info = stmt.run(newUserData.username, newUserData.password);
+    var accessstmt = db.prepare("INSERT INTO accesslog (user, access, time) VALUES ('newUserData.username', 'New user created", `${Date.now}`);
+    const accessinfo = accessstmt.run();
     res.status(200).json("New user " + newUserData.username + " has been created.");
 })
 

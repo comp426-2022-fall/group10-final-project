@@ -9,16 +9,9 @@ const db = new database('data.db');
      const sqlInit = `
          CREATE TABLE accesslog (
             id INTEGER PRIMARY KEY, 
-             remote_addr VARCHAR, 
-             remote_user VARCHAR, 
-             date VARCHAR, 
-             method VARCHAR, 
-             url VARCHAR, 
-            http_version VARCHAR, 
-             status INTEGER, 
-             content_length VARCHAR,
-             referer_url VARCHAR,
-             user_agent VARCHAR
+            user VARCHAR,
+            access VARCHAR,
+            time VARCHAR
          );
      `
      db.exec(sqlInit);
