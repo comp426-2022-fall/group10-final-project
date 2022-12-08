@@ -72,6 +72,16 @@ expressApp.post("/app/login", (req, res) => {
     }
 });
 
+expressApp.post("/app/logout", (req, res) => { 
+    if (loggedIn) {
+        currentUser = null
+        loggedIn = false;
+        return res.status(200).send("Successfully logged out.")
+    } else {
+        return res.status(200).send("You are not logged in.")
+    }
+});
+
 // See /app/createuser/ documentation
 // Creates a user by taking in a username and password 
 // Adds the username and password to the database
@@ -215,8 +225,8 @@ expressApp.post('/app/user/delete', (req, res) => {
     return res.status(200).send("User not found.")
 })
 
-// Throws an error on any endpoint that is not specified
-expressApp.get("*", (req, res) => { //handle 404
+// Throws a 404 Error on any endpoint that is not specified
+expressApp.get("*", (req, res) => {
     res.status(404).send("404 NOT FOUND");
 });
 
