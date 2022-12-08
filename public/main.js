@@ -29,6 +29,7 @@ function refresh() {
 refresh(); //gotta run this at html load
 var savedUsername;
 var savedPassword;
+
 function login() {
     tempUser = document.getElementById("user").value;
     tempPass = document.getElementById("pass").value;
@@ -90,7 +91,7 @@ function updateName(){
     var element = document.getElementById("userN");
     var element2 = document.getElementById("passW");
 
-    if (element.innerText == undefined || element.innerText == null || element2.innerText == undefined || element2.innerText == null){
+    if (savedUsername === undefined || savedUsername === null || savedPassword === undefined || savedPassword === null){
         element.innerHTML = "";
         element2.innerHTML = "";
         return;
