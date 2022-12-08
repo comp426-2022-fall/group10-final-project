@@ -19,6 +19,8 @@ Our team has created Twitter 2.0. With the unfortunate state of Twitter today, o
 - Posting
     - Post to Twitter 2.0 
     - Shows the post itself and the user who wrote it 
+- Backend Info
+    - Database of users, posts, access logs, etc.
 
 ## Planning Documentation
 Not all these features are implemented but we plan on implementing them in the future.
@@ -38,8 +40,7 @@ Not all these features are implemented but we plan on implementing them in the f
         - Themes/Topics added later
         - Replies can show up underneath posts
         - Filter by posts each user makes
-- Backend Info
-    - Database of users, posts, access logs, etc.
+    - Styling to the front-end
 
 - Pages
     - [ ] Login
