@@ -5,8 +5,14 @@ import fs from "fs";
 import db from './database.js';
 import cors from 'cors';
 
+
 let args = minimist(process.argv.slice(2));
 let expressApp = express();
+
+//Create accesslog file stream
+const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
+//Use morgan to log every API call
+expressApp.use(morgan('combined', { stream: accesslog }));
 
 var port = args.port || 5000; //either the port or 5000
 if(args.port == 4000){
@@ -39,14 +45,14 @@ expressApp.get("/app", (req, res) => {
 // Enter username and password
 // Checks to see if username and password are in the database
 expressApp.post("/app/login", (req, res) => { 
-    let newUserData = {
+    var newUserData = {
         username: req.body.username, 
         password: req.body.password,
     }
+    console.log(newUserData.username + " eee" + newUserData.password);
     if (loggedIn) {
         return res.status(200).send("You are already logged in as " + currentUser.username + ".")
-    }
-    else {
+    }else {
         var stmt = db.prepare('SELECT * FROM userinfo');
         const currentUsers = stmt.all();
         for(var i in currentUsers){
@@ -185,7 +191,3 @@ expressApp.get("*", (req, res) => { //handle 404
 });
 
 
-//Create accesslog file stream
-const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
-//Use morgan to log every API call
-expressApp.use(morgan('combined', { stream: accesslog }));
