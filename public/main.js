@@ -176,7 +176,7 @@ function changeUsername(){
         if (response.charAt(0) === 'T'){
             alert("Username already exists");
         }
-        savedPassword = sign;
+        savedUsername = sign;
         updateName();
         refresh();
     }).catch(err => {
