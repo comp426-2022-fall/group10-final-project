@@ -159,7 +159,7 @@ Responds with "Password did not match for user" if the user's password is wrong.
 ```
 #### Response body
 ```
-curl http://localhost:5000/app/user/info/update/username/newusername -d "password=password"
+curl http://localhost:5000/app/user/info/updatename/username/newusername -d "password=password"
 ```
 ```
 Username updated from username to newusername.
