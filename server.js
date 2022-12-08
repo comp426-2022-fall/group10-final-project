@@ -47,7 +47,7 @@ expressApp.get("/app", (req, res) => {
 expressApp.post("/app/login", (req, res) => { 
     var newUserData = {
         username: req.body.username, 
-        password: req.body.password,
+        password: req.body.password
     }
     console.log(newUserData.username + " eee" + newUserData.password);
     if (loggedIn) {
@@ -76,7 +76,7 @@ expressApp.post("/app/login", (req, res) => {
 expressApp.post("/app/createuser", (req, res) => {
     let newUserData = {
         username: req.body.username, 
-        password: req.body.password,
+        password: req.body.password
     }
     var stmt = db.prepare('SELECT username FROM userinfo');
     const currentUsers = stmt.all();
@@ -165,6 +165,33 @@ expressApp.post('/app/user/info/update/:username/:password', (req, res, next) =>
     }
     return res.status(200).send("Username not found."); // user not found
 })
+
+// See /app/user/info/updatename/:username/:newusername documentation
+// Takes in the username and newusername for a user
+// Replaces the old username with the new username in the database
+expressApp.post('/app/user/info/updatename/:username/:newusername', (req, res, next) => {
+    var password = req.body.password
+    var newusername = req.params.newusername
+    var stmt = db.prepare('SELECT * FROM userinfo');
+    const currentUsers = stmt.all();
+    for(var i in currentUsers){ 
+        if (req.params.username == currentUsers[i].username) { // check whether username exists
+            if (password == currentUsers[i].password) { // verify password
+                var stmt = db.prepare('UPDATE userinfo SET username = ? WHERE username = ?');
+                const info = stmt.run(newusername, req.params.username);
+                currentUser = {
+                    username: newusername,
+                    password: password
+                }
+                return res.status(200).send("Username updated from "+req.params.username+" to " + newusername + ".");
+            } else {
+                return res.status(200).send("Password did not match for user.");
+            }
+        }
+    }
+    return res.status(200).send("Username not found."); // user not found
+})
+
 // See /app/user/delete documentation
 // Deletes the specified user from the database
 expressApp.post('/app/user/delete/:username', (req, res) => {
