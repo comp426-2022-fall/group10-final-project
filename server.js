@@ -15,10 +15,6 @@ const accesslog = fs.createWriteStream('./access.log',  {flags: 'a'});
 expressApp.use(morgan('combined', { stream: accesslog }));
 
 var port = args.port || 5000; 
-if(args.port == 4000){
-    console.log("4000 is used for webpage. Server redirected to port 5000.");
-    port = 5000;
-}
 
 var loggedIn = false;
 var currentUser;
