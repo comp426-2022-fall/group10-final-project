@@ -41,7 +41,7 @@ expressApp.get("/app", (req, res) => {
 expressApp.post("/app/login", (req, res) => { 
     let newUserData = {
         username: req.body.username, 
-        password: req.body.password,
+        password: req.body.password
     }
     if (loggedIn) {
         return res.status(200).send("You are already logged in as " + currentUser.username + ".")
@@ -70,7 +70,7 @@ expressApp.post("/app/login", (req, res) => {
 expressApp.post("/app/createuser", (req, res) => {
     let newUserData = {
         username: req.body.username, 
-        password: req.body.password,
+        password: req.body.password
     }
     var stmt = db.prepare('SELECT username FROM userinfo');
     const currentUsers = stmt.all();
@@ -173,6 +173,10 @@ expressApp.post('/app/user/info/updatename/:username/:newusername', (req, res, n
             if (password == currentUsers[i].password) { // verify password
                 var stmt = db.prepare('UPDATE userinfo SET username = ? WHERE username = ?');
                 const info = stmt.run(newusername, req.params.username);
+                currentUser = {
+                    username: newusername,
+                    password: password
+                }
                 return res.status(200).send("Username updated from "+req.params.username+" to " + newusername + ".");
             } else {
                 return res.status(200).send("Password did not match for user.");
