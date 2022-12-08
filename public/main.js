@@ -1,9 +1,17 @@
 var apiUrl = 'http://localhost:5000/app/allposts';
 
-fetch(apiUrl).then(response => {
-    return response.json();;
-}).then(data => {
-    data.forEach(element => {
+function refresh() {
+
+    posts = document.getElementsByClassName("post");
+    for (var i = 0; i < posts.length; i++) {
+        posts[i].remove();
+    }
+
+
+    fetch(apiUrl).then(response => {
+        return response.json();;
+    }).then(data => {
+        data.forEach(element => {
         var temp = "User "+element.username+" Posted:	"+JSON.stringify(element.post)
         var text = document.createTextNode(temp);
         var element = document.createElement('div');
@@ -15,11 +23,13 @@ fetch(apiUrl).then(response => {
         // element.style.padding = '5px'
         element.appendChild(text);
         document.body.appendChild(element);
+        });
+    }).catch(err => {
+        document.write(err);
     });
-}).catch(err => {
-    document.write(err);
-});
+}
 
+refresh();
 var savedUsername;
 var savedPassword;
 function login() {
@@ -73,6 +83,7 @@ function post() {
         return response.text();
     }).then(response => {
         resVal.textContent = response;
+        refresh();
     }).catch(err => {
         console.log(err);
     });   
@@ -118,4 +129,13 @@ function signup(){
     }).catch(err => {
         console.log(err);
     });        
+}
+
+function logout(){
+    if (savedUsername == undefined || savedUsername == null){
+        savedUsername = "";
+        savedPassword = "";
+        updateName();
+        refresh();
+    }
 }
