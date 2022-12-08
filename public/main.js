@@ -48,6 +48,7 @@ function login() {
         } else {
             savedUsername = tempUser;
             savedPassword = tempPass;
+            updateName();
             console.log("User Logged In");
         } 
     }).catch(err => {
@@ -71,4 +72,12 @@ function post() {
     }).catch(err => {
         console.log(err);
     });   
+}
+
+function updateName(){
+    var element = document.getElementById("userN");
+    var element2 = document.getElementById("passW");
+
+    element.innerHTML = "Username: " + savedUsername;
+    element2.innerHTML = "Password: " + savedPassword;
 }
