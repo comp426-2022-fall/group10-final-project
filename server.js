@@ -23,16 +23,19 @@ expressApp.listen(port);
 
 expressApp.use(express.static('./public'))
 
-expressApp.get("/app", (req, res) => { //get request
+// See /app/ documentation
+// returns 200 OK message
+// checks if logged in and returns the users username
+expressApp.get("/app", (req, res) => {
     if (loggedIn) {
         return res.status(200).send("200 OK\nCurrently logged in as: "+currentUser.username);
     }
     else {
         return res.status(200).end()
     }
-     //send 200 OK for the first thing
 });
-//currently only setup some of the endpoints
+
+
 expressApp.post("/app/login", (req, res) => {  //for login
     let newUserData = {
         username: req.body.username, 
