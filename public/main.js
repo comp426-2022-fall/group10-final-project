@@ -20,8 +20,8 @@ fetch(apiUrl).then(response => {
     document.write(err);
 });
 
-var savedUsername = "penis";
-var savedPassword = "beka";
+var savedUsername;
+var savedPassword;
 function login() {
     tempUser = document.getElementById("user").value;
     tempPass = document.getElementById("pass").value;
