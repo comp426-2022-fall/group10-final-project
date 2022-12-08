@@ -148,6 +148,25 @@ Password for username updated successfully.
 ```
 Password did not match for user.
 ```
+
+### /app/user/info/updatename/:username/:newusername/
+Responds with "Username updated from :username to :newusername" if the username is updated.
+Responds with "Password did not match for user" if the user's password is wrong.
+
+#### Request body
+```
+"password=(user password)"
+```
+#### Response body
+```
+curl http://localhost:5000/app/user/info/update/username/newusername -d "password=password"
+```
+```
+Username updated from username to newusername.
+```
+```
+Password did not match for user.
+```
 ### /app/user/delete/:username/
 Responds with "Successfully deleted user username" if the user is deleted.
 Responds with "Incorrect passowrd" if the inputted password is wrong.
