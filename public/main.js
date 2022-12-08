@@ -4,7 +4,6 @@ function refresh() {
     posts.forEach(element => {
         element.remove();
     });
-    
     fetch('http://localhost:5000/app/allposts')
     .then(response => {
         return response.json();;
@@ -91,23 +90,38 @@ function updateName(){
     var element = document.getElementById("userN");
     var element2 = document.getElementById("passW");
 
+    if (element == undefined || element == null || element2 == undefined || element2 == null){
+        element.innerHTML = "";
+        element2.innerHTML = "";
+        return;
+    }
+
     element.innerHTML = "Username: " + savedUsername;
     element2.innerHTML = "Password: " + savedPassword;
 }
 
 function deleteUser(){
-    var username = document.getElementById("userN");
+    if (savedUsername === undefined || savedUsername === null){
+        alert("No user is logged in");
+        return;
+    }
+    userInfo = {username: savedUsername, password: savedPassword};
     fetch('http://localhost:5000/app/user/delete', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         }, 
-        body: JSON.stringify(username),
+        body: JSON.stringify(userInfo),
     }).then(response => {
         return response.text();
+    }).then(response => {
+        savedPassword = undefined;
+        savedUsername = undefined;
+        updateName();
+        refresh();
     }).catch(err => {
         console.log(err);
-    })
+    });
 }
 
 function signup(){
@@ -144,10 +158,12 @@ function signup(){
 }
 
 function logout(){
-    if (savedUsername == undefined || savedUsername == null){
-        savedUsername = "";
-        savedPassword = "";
+    if (!(savedUsername === undefined || savedUsername === null)){
+        savedUsername = undefined;
+        savedPassword = undefined;
         updateName();
         refresh();
+    } else {
+        alert("No user is logged in");
     }
 }
