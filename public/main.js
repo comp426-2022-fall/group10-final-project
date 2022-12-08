@@ -29,7 +29,7 @@ function login() {
         alert("Please enter a username and password");
         return;
     }
-    if(tempUser == "" || tempPass == "") {
+    if(tempUser === "" || tempPass === "") {
         alert("Please enter a username and password");
         return;
     }
@@ -46,7 +46,7 @@ function login() {
         return response.text();
     }).then(response => {
         console.log(response);
-        if (response.charAt(0) == 'T'){
+        if (response.charAt(0) === 'T'){
             alert("No such User exists");
         } else {
             savedUsername = tempUser;
@@ -108,7 +108,7 @@ function signup(){
         alert("Please enter a username and password");
         return;
     }
-    if(tempUser == "" || tempPass == "") {
+    if(tempUser === "" || tempPass === "") {
         alert("Please enter a username and password");
         return;
     }
@@ -122,7 +122,7 @@ function signup(){
     }).then(response => {
         return response.text();
     }).then(response => {
-        if (response.charAt(0) == 'T'){
+        if (response.charAt(0) === 'T'){
             alert("Username already exists");
         }  else {
             savedUsername = tempUser;
